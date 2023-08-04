@@ -1,3 +1,15 @@
+
+import javax.swing.JOptionPane;
+import java.io.IOException;
+import java.sql.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -57,12 +69,17 @@ public class addEmployee extends javax.swing.JFrame {
         lblAddress.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblAddress.setText("Address:");
 
-        comboEmpCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "\"Choose Employee Code\"", "100", "110", "120", "130", "140" }));
+        comboEmpCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Employee Code", "100", "110", "120", "130", "140" }));
 
         lblEmployeeCode.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblEmployeeCode.setText("Employee Code:");
 
         btnAdd.setText("Add Employee");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -159,6 +176,19 @@ public class addEmployee extends javax.swing.JFrame {
         clear();
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+       Employee emp = createEmployee();
+       try{
+           dataIO data = new dataIO();
+           data.add(emp);
+       }catch(SQLException ex){
+           JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+       }catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Driver Not Found. Error: " + ex.getMessage(), "Driver Error", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    }//GEN-LAST:event_btnAddActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -222,4 +252,22 @@ public class addEmployee extends javax.swing.JFrame {
         //this might break this f**king thing but we will see. 
         comboEmpCode.setSelectedIndex(0);
     }
+    
+    private Employee createEmployee(){
+        String fname = txtFirstName.getText();
+        String lname = txtLastName.getText();
+        String phone = txtPhone.getText();
+        String address = txtAddress.getText();
+        String val = (String)comboEmpCode.getSelectedItem();
+        int emp_code = Integer.parseInt(comboEmpCode.getSelectedItem().toString());
+        
+        
+        
+        Employee emp = new Employee(0, fname, lname, phone, address, emp_code);
+        return emp; 
+    }
+    
+   // private boolean validateInput(){
+        
+  //  }
 }

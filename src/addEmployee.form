@@ -88,7 +88,6 @@
               <Component id="lblFirstName" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtFirstName" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
@@ -168,7 +167,7 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="6">
-            <StringItem index="0" value="&quot;Choose Employee Code&quot;"/>
+            <StringItem index="0" value="Choose Employee Code"/>
             <StringItem index="1" value="100"/>
             <StringItem index="2" value="110"/>
             <StringItem index="3" value="120"/>
@@ -193,6 +192,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add Employee"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnClear">
       <Properties>
