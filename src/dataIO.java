@@ -35,11 +35,11 @@ public class dataIO {
         String strSQL = "INSERT INTO employee (emp_fname, emp_lname, emp_phone, emp_address, emp_code)" +
                 "VALUES(?, ?, ?, ?, ?)";
         PreparedStatement pstmt = con.prepareStatement(strSQL);
-        pstmt.setString(2, emp.getFName());
-        pstmt.setString(3, emp.getLName());
-        pstmt.setString(4, emp.getPhone());
-        pstmt.setString(5, emp.getAddress()); 
-        pstmt.setInt(6, emp.getEmpCode());
+        pstmt.setString(1, emp.getFName());
+        pstmt.setString(2, emp.getLName());
+        pstmt.setString(3, emp.getPhone());
+        pstmt.setString(4, emp.getAddress()); 
+        pstmt.setInt(5, emp.getEmpCode());
         
         pstmt.execute();
         
