@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/Jake/OneDrive/Desktop/DeVry%202023/SoftwareEngineeringII/GBManufacturing/src/addJob.java</file>
+            <file>file:/C:/Users/Jake/OneDrive/Desktop/DeVry%202023/SoftwareEngineeringII/GBManufacturing/src/dataIO.java</file>
+            <file>file:/C:/Users/Jake/OneDrive/Desktop/DeVry%202023/SoftwareEngineeringII/GBManufacturing/src/AdminHomePage.java</file>
+            <file>file:/C:/Users/Jake/OneDrive/Desktop/DeVry%202023/SoftwareEngineeringII/GBManufacturing/src/EmployeeLogin.java</file>
+            <file>file:/C:/Users/Jake/OneDrive/Desktop/DeVry%202023/SoftwareEngineeringII/GBManufacturing/src/addEmployee.java</file>
+            <file>file:/C:/Users/Jake/OneDrive/Desktop/DeVry%202023/SoftwareEngineeringII/GBManufacturing/src/Employee.java</file>
+        </group>
+>>>>>>> 2b8c4fa6acf61cedcf5690f819b714211457da2c
     </open-files>
 </project-private>
