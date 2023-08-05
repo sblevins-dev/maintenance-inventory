@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.sql.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 
 public class dataIO {
@@ -45,6 +47,35 @@ public class dataIO {
         
         con.close();
         
+    }
+    
+    public void getTools (JList list) throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+        
+        // create list model
+        DefaultListModel<String> tools = new DefaultListModel();
+        
+        String str = "SELECT * FROM tool";
+        
+        Statement stmt = con.createStatement();
+        ResultSet results = stmt.executeQuery(str);
+        
+        while (results.next())
+        {
+            int tID = results.getInt("tool_id");
+            String tName = results.getString("tool_name");
+            String tLoc = results.getString("tool_location");
+            int tQuantity = results.getInt("quantity");
+            
+            Tool tool = new Tool(tID, tName, tLoc, tQuantity);
+            tools.addElement(tName);
+        }
+        
+        list.setModel(tools);
     }
     
 }

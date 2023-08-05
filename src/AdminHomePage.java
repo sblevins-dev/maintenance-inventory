@@ -1,3 +1,8 @@
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,6 +19,7 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     public AdminHomePage() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -23,7 +29,8 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         lblTitle = new javax.swing.JLabel();
         btnAddEmp = new javax.swing.JButton();
@@ -44,8 +51,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
 
         btnAddEmp.setText("Add Employee");
-        btnAddEmp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddEmp.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnAddEmpActionPerformed(evt);
             }
         });
@@ -53,18 +62,27 @@ public class AdminHomePage extends javax.swing.JFrame {
         btnTerminate.setText("Terminate");
 
         btnAddJob.setText("Add Job");
+        btnAddJob.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAddJobActionPerformed(evt);
+            }
+        });
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblName.setText("Welcome to the GB Manufacturing Administrator Access Page.   ");
 
         tblAdmin.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String [] {
+            new String []
+            {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
@@ -127,6 +145,25 @@ public class AdminHomePage extends javax.swing.JFrame {
              this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
              this.dispose();
     }//GEN-LAST:event_btnAddEmpActionPerformed
+
+    private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
+    {//GEN-HEADEREND:event_btnAddJobActionPerformed
+        addJob frame = null;
+        try
+        {
+            frame = new addJob();
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(AdminHomePage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(AdminHomePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnAddJobActionPerformed
 
     /**
      * @param args the command line arguments

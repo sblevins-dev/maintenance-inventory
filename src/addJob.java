@@ -1,19 +1,36 @@
+
+import java.lang.reflect.Array;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Jake
  */
-public class addJob extends javax.swing.JFrame {
-
+public class addJob extends javax.swing.JFrame
+{
     /**
      * Creates new form addJob
      */
-    public addJob() {
+    public addJob() throws ClassNotFoundException, SQLException
+    {
         initComponents();
+        this.setLocationRelativeTo(null);
+        dataIO data = new dataIO();
+        data.getTools(toolList);
+        
+        toolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     /**
@@ -23,7 +40,8 @@ public class addJob extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         lblTitle = new javax.swing.JLabel();
         lblJobName = new javax.swing.JLabel();
@@ -31,7 +49,7 @@ public class addJob extends javax.swing.JFrame {
         txtJobName = new javax.swing.JTextField();
         txtJobDescription = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        toolList = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -48,12 +66,7 @@ public class addJob extends javax.swing.JFrame {
         lblJobDescription.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblJobDescription.setText("Job Description: ");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(toolList);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -78,9 +91,8 @@ public class addJob extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtJobName)
-                                .addComponent(txtJobDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)))
+                            .addComponent(txtJobName)
+                            .addComponent(txtJobDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
                         .addGap(0, 151, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -99,7 +111,7 @@ public class addJob extends javax.swing.JFrame {
                     .addComponent(txtJobDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,40 +120,51 @@ public class addJob extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException, SQLException
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(addJob.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(addJob.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(addJob.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(addJob.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new addJob().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable()
+//        {
+//            public void run()
+//            {
+//                new addJob().setVisible(true);
+//            }
+//        });
+
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -149,6 +172,7 @@ public class addJob extends javax.swing.JFrame {
     private javax.swing.JLabel lblJobDescription;
     private javax.swing.JLabel lblJobName;
     private javax.swing.JLabel lblTitle;
+    public static javax.swing.JList<String> toolList;
     private javax.swing.JTextField txtJobDescription;
     private javax.swing.JTextField txtJobName;
     // End of variables declaration//GEN-END:variables
