@@ -4,11 +4,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -20,6 +22,7 @@ import javax.swing.ListSelectionModel;
  */
 public class addJob extends javax.swing.JFrame
 {
+
     /**
      * Creates new form addJob
      */
@@ -29,8 +32,7 @@ public class addJob extends javax.swing.JFrame
         this.setLocationRelativeTo(null);
         dataIO data = new dataIO();
         data.getTools(toolList);
-        
-        toolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
     }
 
     /**
@@ -50,6 +52,7 @@ public class addJob extends javax.swing.JFrame
         txtJobDescription = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         toolList = new javax.swing.JList<>();
+        btnAddJob = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -67,6 +70,15 @@ public class addJob extends javax.swing.JFrame
         lblJobDescription.setText("Job Description: ");
 
         jScrollPane1.setViewportView(toolList);
+
+        btnAddJob.setText("Add Job");
+        btnAddJob.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAddJobActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -92,7 +104,10 @@ public class addJob extends javax.swing.JFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                             .addComponent(txtJobName)
-                            .addComponent(txtJobDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                            .addComponent(txtJobDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)))
                         .addGap(0, 151, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -111,11 +126,27 @@ public class addJob extends javax.swing.JFrame
                     .addComponent(txtJobDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
+    {//GEN-HEADEREND:event_btnAddJobActionPerformed
+        List<String> selectedItems = toolList.getSelectedValuesList();
+        for (String item : selectedItems)
+        {
+            System.out.println(item);
+        }
+
+        String jName = txtJobName.getText();
+        String jDesc = txtJobDescription.getText();
+
+        System.out.println(jName);
+    }//GEN-LAST:event_btnAddJobActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,11 +191,16 @@ public class addJob extends javax.swing.JFrame
 //                new addJob().setVisible(true);
 //            }
 //        });
+        SwingUtilities.invokeLater(() ->
+        {
+            toolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        });
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddJob;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
