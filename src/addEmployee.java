@@ -177,10 +177,15 @@ public class addEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       Employee emp = createEmployee();
+        if(validateInput() == false){
+            return;
+        }
+        Employee emp = createEmployee();
        try{
            dataIO data = new dataIO();
            data.add(emp);
+           JOptionPane.showMessageDialog(this, "Employee added to system", "Successful" ,JOptionPane.INFORMATION_MESSAGE);
+           clear();
        }catch(SQLException ex){
            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
        }catch (ClassNotFoundException ex) {
@@ -252,13 +257,50 @@ public class addEmployee extends javax.swing.JFrame {
         //this might break this f**king thing but we will see. 
         comboEmpCode.setSelectedIndex(0);
     }
-    
+     private boolean validateInput(){
+      String fname = txtFirstName.getText();
+      String lname = txtLastName.getText();
+      String phone = txtPhone.getText();
+      String address = txtAddress.getText(); 
+      String emp_code = comboEmpCode.getSelectedItem().toString();
+      
+      if(fname.isBlank()){
+          JOptionPane.showMessageDialog(this, "Enter a first name.", "Name Error", JOptionPane.ERROR_MESSAGE);
+          return false;
+      }
+      if(lname.isBlank()){
+          JOptionPane.showMessageDialog(this, "Enter a last name.", "Name Error", JOptionPane.ERROR_MESSAGE);
+          return false;
+      }
+      if(phone.isBlank()){
+          JOptionPane.showMessageDialog(this, "Enter a phone number.", "Phone Error", JOptionPane.ERROR_MESSAGE);
+          return false;
+      }
+      if(phone.length() < 10){
+         JOptionPane.showMessageDialog(this, "Phone must contain 10 digits.", "Phone Error", JOptionPane.ERROR_MESSAGE);
+
+      }
+     if(address.isBlank()){
+         JOptionPane.showMessageDialog(this, "Enter an address.", "Address Error", JOptionPane.ERROR_MESSAGE);
+         return false;
+     }
+     if(address.length() < 6){
+         JOptionPane.showMessageDialog(this, "Address must be 6 characters or more.", "Address Error", JOptionPane.ERROR_MESSAGE);
+         return false; 
+     }
+     if("Choose Employee Code".equals(emp_code)){
+         JOptionPane.showMessageDialog(this, "Select an employee code", "Employee Code Error", JOptionPane.ERROR_MESSAGE);
+         return false;
+     }
+     return true;
+     }
+     
+     
     private Employee createEmployee(){
         String fname = txtFirstName.getText();
         String lname = txtLastName.getText();
         String phone = txtPhone.getText();
         String address = txtAddress.getText();
-        String val = (String)comboEmpCode.getSelectedItem();
         int emp_code = Integer.parseInt(comboEmpCode.getSelectedItem().toString());
         
         
@@ -267,7 +309,4 @@ public class addEmployee extends javax.swing.JFrame {
         return emp; 
     }
     
-   // private boolean validateInput(){
-        
-  //  }
 }

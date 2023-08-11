@@ -42,7 +42,7 @@ public class dataIO {
         pstmt.setString(3, emp.getPhone());
         pstmt.setString(4, emp.getAddress()); 
         pstmt.setInt(5,emp.getEmpCode());
-        
+
         pstmt.execute();
         
         con.close();
