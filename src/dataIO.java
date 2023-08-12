@@ -7,18 +7,9 @@
  *
  * @author Jake
  */
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-import java.util.ArrayList;
+
 import java.sql.*;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 
 
 public class dataIO {
@@ -49,7 +40,7 @@ public class dataIO {
         
     }
     
-    public void getTools (JList list) throws ClassNotFoundException, SQLException
+    public ResultSet getTools () throws ClassNotFoundException, SQLException
     {
         //check for the driver
         Class.forName("software.aws.rds.jdbc.mysql.Driver");
@@ -64,18 +55,7 @@ public class dataIO {
         Statement stmt = con.createStatement();
         ResultSet results = stmt.executeQuery(str);
         
-        while (results.next())
-        {
-            int tID = results.getInt("tool_id");
-            String tName = results.getString("tool_name");
-            String tLoc = results.getString("tool_location");
-            int tQuantity = results.getInt("quantity");
-            
-            Tool tool = new Tool(tID, tName, tLoc, tQuantity);
-            tools.addElement(tName);
-        }
-        
-        list.setModel(tools);
+        return results;
     }
     
     public void enterJob()
