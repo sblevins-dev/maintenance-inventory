@@ -15,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import java.sql.*;
+import java.util.Random;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -173,22 +175,47 @@ public class addJob extends javax.swing.JFrame
 
     private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
     {//GEN-HEADEREND:event_btnAddJobActionPerformed
-
-        String jName = txtJobName.getText();
-        String jDesc = txtJobDescription.getText();
-        
-        String[][] reqToolList = getSelectedRows();
-
-        for (int rows = 0; rows < reqToolList.length; rows++)
+        if (validateInputs())
         {
-            for (int columns = 0; columns < reqToolList[rows].length; columns++)
-            {
-                System.out.println(reqToolList[rows][columns]);
-            }
+            String jName = txtJobName.getText();
+            String jDesc = txtJobDescription.getText();
 
+            String[] reqToolList = getSelectedRows();
+
+            String jobCode = lstJobCodes.getSelectedValue();
+
+            dataIO data = new dataIO();
+
+            Random rand = new Random();
+
+            int randInt = rand.nextInt(1000);
+
+            try
+            {
+                data.enterJob(jName, jDesc, reqToolList, jobCode, randInt);
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
+            } finally
+            {
+                txtJobName.setText("");
+                txtJobDescription.setText("");
+                tblToolList.clearSelection();
+                lstJobCodes.clearSelection();
+                JFrame frame = new JFrame();
+                JOptionPane.showMessageDialog(frame, "Successfully added job to database!");
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, 
+                    "Please fill and select all required fields.", 
+                    "Input Empty", JOptionPane.ERROR_MESSAGE);
         }
         
-        String jobCode = lstJobCodes.getSelectedValue();
     }//GEN-LAST:event_btnAddJobActionPerformed
 
     /**
@@ -234,11 +261,6 @@ public class addJob extends javax.swing.JFrame
 //                new addJob().setVisible(true);
 //            }
 //        });
-        SwingUtilities.invokeLater(() ->
-        {
-            //toolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        });
 
     }
 
@@ -292,20 +314,17 @@ public class addJob extends javax.swing.JFrame
         tblToolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
-    private String[][] getSelectedRows()
+    private String[] getSelectedRows()
     {
         int[] selectedRows = tblToolList.getSelectedRows();
         int columnCount = tblToolList.getColumnCount();
         TableModel model = tblToolList.getModel();
         int rowCount = selectedRows.length;
-        String[][] list = new String[rowCount][columnCount];
+        String[] list = new String[rowCount];
 
         for (int rows = 0; rows < rowCount; rows++)
         {
-            for (int columns = 0; columns < columnCount; columns++)
-            {
-                list[rows][columns] = model.getValueAt(rows, columns).toString();
-            }
+            list[rows] = model.getValueAt(selectedRows[rows], 0).toString();
         }
 
         return list;
@@ -322,5 +341,18 @@ public class addJob extends javax.swing.JFrame
         }
         
         lstJobCodes.setModel(model);
+    }
+
+    private boolean validateInputs()
+    {
+        if (tblToolList.getSelectionModel().isSelectionEmpty() 
+                || lstJobCodes.getSelectionModel().isSelectionEmpty()
+                || txtJobName.getText().isEmpty()
+                || txtJobDescription.getText().isEmpty())
+        {
+            return false;
+        }
+        
+        return true;
     }
 }
