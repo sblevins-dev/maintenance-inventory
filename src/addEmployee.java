@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
  * @author Jake
  */
 public class addEmployee extends javax.swing.JFrame {
+    
+    
 
     /**
      * Creates new form addEmployee

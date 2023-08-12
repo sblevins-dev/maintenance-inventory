@@ -49,4 +49,39 @@ public class dataIO {
         
     }
     
+    public ArrayList<Employee> getList() throws SQLException{
+        ArrayList<Employee> arr = new ArrayList<Employee>();
+        
+        //connect
+        Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM employee";
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        while(rs.next()){
+            Employee emp = new Employee(); 
+            emp.setEmployeeID(rs.getInt(1));
+            emp.setFName(rs.getString(2));
+            emp.setLName(rs.getString(3));
+            emp.setPhone(rs.getString(4));
+            emp.setAddress(rs.getString(5));
+            emp.setEmpCode(rs.getInt(6));
+            
+            arr.add(emp);
+        }
+        con.close();
+        
+        return arr;
+    }
+    public void delete(int empID) throws SQLException{
+    Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+    
+    String sql = "DELETE FROM employee WHERE emp_id = ?";
+    PreparedStatement stmt = con.prepareStatement(sql);
+    stmt.setInt(1, empID);
+    stmt.execute();
+    
+    con.close();
+    }
+    
 }

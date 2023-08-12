@@ -124,6 +124,15 @@ public class EmployeeLogin extends javax.swing.JFrame
              this.dispose();
             
        }
+        else if((password > 20000 && password < 30000) && "inventory management".equalsIgnoreCase(username) ){
+        
+    }
+        else if((password>30000 && password < 40000)){
+            
+        }
+        else{
+            
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

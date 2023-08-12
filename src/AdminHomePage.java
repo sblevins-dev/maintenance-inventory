@@ -1,3 +1,8 @@
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -8,6 +13,7 @@
  * @author Jake
  */
 public class AdminHomePage extends javax.swing.JFrame {
+    DefaultListModel<Employee> empList = new DefaultListModel();
 
     /**
      * Creates new form AdminHomePage
@@ -51,6 +57,11 @@ public class AdminHomePage extends javax.swing.JFrame {
         });
 
         btnTerminate.setText("Terminate");
+        btnTerminate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerminateActionPerformed(evt);
+            }
+        });
 
         btnAddJob.setText("Add Job");
 
@@ -120,13 +131,18 @@ public class AdminHomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmpActionPerformed
-        // TODO add your handling code here:
+
         addEmployee frame  = new addEmployee();
              frame.setVisible(true);
              this.setVisible(false);
              this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
              this.dispose();
     }//GEN-LAST:event_btnAddEmpActionPerformed
+
+    private void btnTerminateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminateActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnTerminateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,4 +191,20 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblAdmin;
     // End of variables declaration//GEN-END:variables
+
+private void loadEmps() throws SQLException{
+try{
+    dataIO data = new dataIO();
+    ArrayList<Employee> emps = data.getList();
+    empList.clear();
+    tblAdmin.delete();
+    
+    
+    
+}catch{
+    
+}
+}
+
+
 }
