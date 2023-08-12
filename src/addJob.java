@@ -57,11 +57,12 @@ public class addJob extends javax.swing.JFrame
         lblJobDescription = new javax.swing.JLabel();
         txtJobName = new javax.swing.JTextField();
         txtJobDescription = new javax.swing.JTextField();
-        btnAddJob = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblToolList = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstJobCodes = new javax.swing.JList<>();
+        btnAddJob1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -78,12 +79,12 @@ public class addJob extends javax.swing.JFrame
         lblJobDescription.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblJobDescription.setText("Job Description: ");
 
-        btnAddJob.setText("Add Job");
-        btnAddJob.addActionListener(new java.awt.event.ActionListener()
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnAddJobActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -111,6 +112,15 @@ public class addJob extends javax.swing.JFrame
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(lstJobCodes);
+
+        btnAddJob1.setText("Add Job");
+        btnAddJob1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAddJob1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -142,10 +152,14 @@ public class addJob extends javax.swing.JFrame
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 52, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAddJob1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(49, 49, 49))))
         );
         layout.setVerticalGroup(
@@ -166,57 +180,28 @@ public class addJob extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddJob1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
-    {//GEN-HEADEREND:event_btnAddJobActionPerformed
-        if (validateInputs())
-        {
-            String jName = txtJobName.getText();
-            String jDesc = txtJobDescription.getText();
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBackActionPerformed
+    {//GEN-HEADEREND:event_btnBackActionPerformed
+        AdminHomePage frame  = new AdminHomePage();
+             frame.setVisible(true);
+             this.setVisible(false);
+             this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+             this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
-            String[] reqToolList = getSelectedRows();
-
-            String jobCode = lstJobCodes.getSelectedValue();
-
-            dataIO data = new dataIO();
-
-            Random rand = new Random();
-
-            int randInt = rand.nextInt(1000);
-
-            try
-            {
-                data.enterJob(jName, jDesc, reqToolList, jobCode, randInt);
-            } catch (ClassNotFoundException ex)
-            {
-                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex)
-            {
-                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
-            } finally
-            {
-                txtJobName.setText("");
-                txtJobDescription.setText("");
-                tblToolList.clearSelection();
-                lstJobCodes.clearSelection();
-                JFrame frame = new JFrame();
-                JOptionPane.showMessageDialog(frame, "Successfully added job to database!");
-            }
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(rootPane, 
-                    "Please fill and select all required fields.", 
-                    "Input Empty", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_btnAddJobActionPerformed
+    private void btnAddJob1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJob1ActionPerformed
+    {//GEN-HEADEREND:event_btnAddJob1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddJob1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,7 +250,8 @@ public class addJob extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddJob;
+    private javax.swing.JButton btnAddJob1;
+    private javax.swing.JButton btnBack;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
