@@ -1,16 +1,22 @@
 
+
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -30,8 +36,7 @@ public class addJob extends javax.swing.JFrame
     {
         initComponents();
         this.setLocationRelativeTo(null);
-        dataIO data = new dataIO();
-        //data.getTools(toolList);
+        populateTable();
 
     }
 
@@ -50,9 +55,9 @@ public class addJob extends javax.swing.JFrame
         lblJobDescription = new javax.swing.JLabel();
         txtJobName = new javax.swing.JTextField();
         txtJobDescription = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        toolList = new javax.swing.JList<>();
         btnAddJob = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblToolList = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -69,8 +74,6 @@ public class addJob extends javax.swing.JFrame
         lblJobDescription.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblJobDescription.setText("Job Description: ");
 
-        jScrollPane1.setViewportView(toolList);
-
         btnAddJob.setText("Add Job");
         btnAddJob.addActionListener(new java.awt.event.ActionListener()
         {
@@ -79,6 +82,21 @@ public class addJob extends javax.swing.JFrame
                 btnAddJobActionPerformed(evt);
             }
         });
+
+        tblToolList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblToolList);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -95,28 +113,32 @@ public class addJob extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblJobDescription)
-                            .addComponent(lblJobName))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                            .addComponent(txtJobName)
-                            .addComponent(txtJobDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)))
-                        .addGap(0, 151, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblJobDescription)
+                                    .addComponent(lblJobName))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtJobDescription)
+                                    .addComponent(txtJobName))
+                                .addGap(43, 43, 43)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 52, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(lblTitle)
-                .addGap(47, 47, 47)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblJobName)
                     .addComponent(txtJobName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,11 +146,11 @@ public class addJob extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblJobDescription)
                     .addComponent(txtJobDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddJob, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,16 +158,16 @@ public class addJob extends javax.swing.JFrame
 
     private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
     {//GEN-HEADEREND:event_btnAddJobActionPerformed
-        List<String> selectedItems = toolList.getSelectedValuesList();
-        for (String item : selectedItems)
-        {
-            System.out.println(item);
-        }
-
-        String jName = txtJobName.getText();
-        String jDesc = txtJobDescription.getText();
-
-        System.out.println(jName);
+//        List<String> selectedItems = toolList.getSelectedValuesList();
+//        for (String item : selectedItems)
+//        {
+//            System.out.println(item);
+//        }
+//
+//        String jName = txtJobName.getText();
+//        String jDesc = txtJobDescription.getText();
+//
+//        System.out.println(jName);
     }//GEN-LAST:event_btnAddJobActionPerformed
 
     /**
@@ -193,7 +215,7 @@ public class addJob extends javax.swing.JFrame
 //        });
         SwingUtilities.invokeLater(() ->
         {
-            toolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            //toolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         });
 
@@ -208,8 +230,44 @@ public class addJob extends javax.swing.JFrame
     private javax.swing.JLabel lblJobDescription;
     private javax.swing.JLabel lblJobName;
     private javax.swing.JLabel lblTitle;
-    public static javax.swing.JList<String> toolList;
+    private javax.swing.JTable tblToolList;
     private javax.swing.JTextField txtJobDescription;
     private javax.swing.JTextField txtJobName;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() throws ClassNotFoundException, SQLException
+    {
+        dataIO dataResults = new dataIO();
+        ResultSet results = dataResults.getTools();
+        ResultSetMetaData metaData = results.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        
+        
+        
+        Vector<String> columnNames = new Vector<String>();
+        
+        for (int column = 1; column <= columnCount; column++)
+        {
+            columnNames.add(metaData.getColumnName(column));
+        }
+        
+        // data of the table
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        
+        while (results.next())
+        {
+            Vector<Object> vector = new Vector<Object>();
+            
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++)
+            {
+                vector.add(results.getObject(columnIndex));
+            }
+            
+            data.add(vector);
+        }
+        
+        DefaultTableModel dataModel = new DefaultTableModel(data, columnNames);
+        tblToolList.setModel(dataModel);
+        tblToolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }
 }

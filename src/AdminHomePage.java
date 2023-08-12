@@ -148,10 +148,10 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
     {//GEN-HEADEREND:event_btnAddJobActionPerformed
-        addJob1 frame = null;
+        addJob frame = null;
         try
         {
-            frame = new addJob1();
+            frame = new addJob();
         } catch (ClassNotFoundException ex)
         {
             Logger.getLogger(AdminHomePage.class.getName()).log(Level.SEVERE, null, ex);
