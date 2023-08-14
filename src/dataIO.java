@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.Vector;
+
 
 
 public class dataIO {
@@ -49,9 +51,9 @@ public class dataIO {
         
     }
     
-    public ArrayList<Employee> getList() throws SQLException{
-        ArrayList<Employee> arr = new ArrayList<Employee>();
-        
+    public ArrayList<Employee>getList() throws SQLException{
+         ArrayList<Employee> empArr = new ArrayList<Employee>();
+       
         //connect
         Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
         Statement stmt = con.createStatement();
@@ -60,6 +62,7 @@ public class dataIO {
         
         while(rs.next()){
             Employee emp = new Employee(); 
+           
             emp.setEmployeeID(rs.getInt(1));
             emp.setFName(rs.getString(2));
             emp.setLName(rs.getString(3));
@@ -67,11 +70,11 @@ public class dataIO {
             emp.setAddress(rs.getString(5));
             emp.setEmpCode(rs.getInt(6));
             
-            arr.add(emp);
+            empArr.add(emp);
         }
         con.close();
         
-        return arr;
+        return empArr;
     }
     public void delete(int empID) throws SQLException{
     Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
