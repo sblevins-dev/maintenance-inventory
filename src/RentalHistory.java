@@ -112,7 +112,7 @@ public class RentalHistory extends javax.swing.JFrame
         {
             public void run()
             {
-                new RentalHistory().setVisible(true);
+                //new RentalHistory().setVisible(true);
             }
         });
         
