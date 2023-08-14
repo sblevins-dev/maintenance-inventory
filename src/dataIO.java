@@ -104,7 +104,7 @@ public class dataIO {
             pstmt.execute();
     }
     
-    private ResultSet getRentals(int id) throws ClassNotFoundException, SQLException
+    public ResultSet getRentals(int id) throws ClassNotFoundException, SQLException
     {
         //check for the driver
         Class.forName("software.aws.rds.jdbc.mysql.Driver");

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import java.sql.*;
+
 /**
  *
  * @author nechi
@@ -13,9 +15,11 @@ public class RentalHistory extends javax.swing.JFrame
     /**
      * Creates new form RentalHistory
      */
-    public RentalHistory()
+    public RentalHistory() throws ClassNotFoundException, SQLException
     {
         initComponents();
+        this.setLocationRelativeTo(null);
+        pullRentalHistory();
     }
 
     /**
@@ -111,10 +115,21 @@ public class RentalHistory extends javax.swing.JFrame
                 new RentalHistory().setVisible(true);
             }
         });
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void pullRentalHistory() throws ClassNotFoundException, SQLException
+    {
+        dataIO data = new dataIO();
+        
+        int id = 5;
+        
+        ResultSet results = data.getRentals(id);
+    }
 }
