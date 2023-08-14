@@ -1,4 +1,5 @@
 
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -21,6 +22,7 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     public AdminHomePage() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -30,7 +32,8 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         lblTitle = new javax.swing.JLabel();
         btnAddEmp = new javax.swing.JButton();
@@ -56,15 +59,19 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
 
         btnAddEmp.setText("Add Employee");
-        btnAddEmp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddEmp.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnAddEmpActionPerformed(evt);
             }
         });
 
         btnTerminate.setText("Terminate");
-        btnTerminate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnTerminate.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnTerminateActionPerformed(evt);
             }
         });
@@ -88,8 +95,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblEmpDetails.setText("Employee Details: ");
 
         btnLoadEmps.setText("Load Emps");
-        btnLoadEmps.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnLoadEmps.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnLoadEmpsActionPerformed(evt);
             }
         });
