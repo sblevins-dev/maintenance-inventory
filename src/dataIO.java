@@ -74,6 +74,11 @@ public class dataIO {
         }
         con.close();
         
+        for (int i = 0; i < empArr.size(); i++)
+        {
+            System.out.println(empArr.get(i).getFName());
+        }
+        
         return empArr;
     }
     public void delete(int empID) throws SQLException{
