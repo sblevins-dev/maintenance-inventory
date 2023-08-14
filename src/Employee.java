@@ -26,6 +26,12 @@ public class Employee {
         empCode = 0;
     }
     
+    @Override
+    public String toString()
+    {
+        return FName + " " + LName;
+    }
+    
     //parameterized constructor
     public Employee(int employeeID, String FName, String LName, String phone, String address, int empCode){
         this.employeeID = employeeID;

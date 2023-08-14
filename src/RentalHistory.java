@@ -4,6 +4,9 @@
  */
 
 import java.sql.*;
+import java.util.Vector;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,11 +36,11 @@ public class RentalHistory extends javax.swing.JFrame
     {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRentals = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblRentals.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
                 {null, null, null, null},
@@ -50,7 +53,7 @@ public class RentalHistory extends javax.swing.JFrame
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblRentals);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,15 +124,43 @@ public class RentalHistory extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblRentals;
     // End of variables declaration//GEN-END:variables
 
     private void pullRentalHistory() throws ClassNotFoundException, SQLException
     {
-        dataIO data = new dataIO();
+        dataIO dataResults = new dataIO();
         
         int id = 5;
         
-        ResultSet results = data.getRentals(id);
+        ResultSet results = dataResults.getRentals(id);
+        ResultSetMetaData metaData = results.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+        Vector<String> columnNames = new Vector<String>();
+
+        for (int column = 1; column <= columnCount; column++)
+        {
+            columnNames.add(metaData.getColumnName(column));
+        }
+
+        // data of the table
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+
+        while (results.next())
+        {
+            Vector<Object> vector = new Vector<Object>();
+
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++)
+            {
+                vector.add(results.getObject(columnIndex));
+            }
+
+            data.add(vector);
+        }
+
+        DefaultTableModel dataModel = new DefaultTableModel(data, columnNames);
+        tblRentals.setModel(dataModel);
+        tblRentals.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 }

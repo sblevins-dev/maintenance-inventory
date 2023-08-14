@@ -191,16 +191,54 @@ public class addJob extends javax.swing.JFrame
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBackActionPerformed
     {//GEN-HEADEREND:event_btnBackActionPerformed
-        AdminHomePage frame  = new AdminHomePage();
-             frame.setVisible(true);
-             this.setVisible(false);
-             this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
-             this.dispose();
+        AdminHomePage frame = new AdminHomePage();
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddJob1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJob1ActionPerformed
     {//GEN-HEADEREND:event_btnAddJob1ActionPerformed
-        // TODO add your handling code here:
+        if (validateInputs())
+        {
+            String jName = txtJobName.getText();
+            String jDesc = txtJobDescription.getText();
+
+            String[] reqToolList = getSelectedRows();
+
+            String jobCode = lstJobCodes.getSelectedValue();
+
+            dataIO data = new dataIO();
+
+            Random rand = new Random();
+
+            int randInt = rand.nextInt(1000);
+
+            try
+            {
+                data.enterJob(jName, jDesc, reqToolList, jobCode, randInt);
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
+            } finally
+            {
+                txtJobName.setText("");
+                txtJobDescription.setText("");
+                tblToolList.clearSelection();
+                lstJobCodes.clearSelection();
+                JFrame frame = new JFrame();
+                JOptionPane.showMessageDialog(frame, "Successfully added job to database!");
+            }
+        } else
+        {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Please fill and select all required fields.",
+                    "Input Empty", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddJob1ActionPerformed
 
     /**
@@ -246,7 +284,6 @@ public class addJob extends javax.swing.JFrame
 //                new addJob().setVisible(true);
 //            }
 //        });
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -318,27 +355,30 @@ public class addJob extends javax.swing.JFrame
 
     private void populateJobCodeList()
     {
-        String[] jobCodes = {"1000", "2000", "3000", "4000", "5000"};
+        String[] jobCodes =
+        {
+            "1000", "2000", "3000", "4000", "5000"
+        };
         DefaultListModel model = new DefaultListModel();
-        
+
         for (int i = 0; i < jobCodes.length; i++)
         {
             model.addElement(jobCodes[i]);
         }
-        
+
         lstJobCodes.setModel(model);
     }
 
     private boolean validateInputs()
     {
-        if (tblToolList.getSelectionModel().isSelectionEmpty() 
+        if (tblToolList.getSelectionModel().isSelectionEmpty()
                 || lstJobCodes.getSelectionModel().isSelectionEmpty()
                 || txtJobName.getText().isEmpty()
                 || txtJobDescription.getText().isEmpty())
         {
             return false;
         }
-        
+
         return true;
     }
 }
