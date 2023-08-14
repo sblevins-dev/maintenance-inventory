@@ -270,6 +270,7 @@ public class addJob extends javax.swing.JFrame
     {
         dataIO dataResults = new dataIO();
         ResultSet results = dataResults.getTools();
+        ResultSet results2 = dataResults.getRentals(5);
         ResultSetMetaData metaData = results.getMetaData();
         int columnCount = metaData.getColumnCount();
 

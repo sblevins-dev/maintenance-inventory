@@ -104,4 +104,24 @@ public class dataIO {
             pstmt.execute();
     }
     
+    private ResultSet getRentals(int id) throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+        
+        // create list model
+        DefaultListModel<String> tools = new DefaultListModel();
+        
+        String strSQL = "SELECT * FROM rental WHERE emp_id=?";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+        
+        ResultSet results = pstmt.executeQuery();
+        
+        
+        return results;
+    }
+    
 }
