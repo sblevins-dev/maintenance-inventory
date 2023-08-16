@@ -9,42 +9,40 @@ import javax.swing.DefaultListModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author nechi
  */
 public class CheckOutForm extends javax.swing.JFrame
 {
+
     DefaultListModel toolList = new DefaultListModel();
 
     private void populateList() throws ClassNotFoundException, SQLException
     {
         dataIO data = new dataIO();
-        
+
         ArrayList<Tool> tools = new ArrayList();
         ResultSet td = data.getTools();
-        
-        while(td.next())
+
+        while (td.next())
         {
             Tool tool = new Tool();
-            
+
             tool.setToolID(td.getInt(1));
             tool.setToolName(td.getString(2));
             tool.setToolLocation(td.getString(3));
             tool.setToolQuantity(td.getInt(4));
-            
+
             tools.add(tool);
         }
-        
+
         for (int i = 0; i < tools.size(); i++)
         {
             toolList.addElement(tools.get(i));
         }
     }
 
-    
-    
     /**
      * Creates new form CheckOutForm
      */
@@ -52,7 +50,7 @@ public class CheckOutForm extends javax.swing.JFrame
     {
         initComponents();
         this.setLocationRelativeTo(null);
-         populateList();
+        populateList();
     }
 
     /**
@@ -91,6 +89,13 @@ public class CheckOutForm extends javax.swing.JFrame
 
         btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,6 +138,15 @@ public class CheckOutForm extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBackActionPerformed
+    {//GEN-HEADEREND:event_btnBackActionPerformed
+        AdminHomePage frame = new AdminHomePage();
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,8 +200,7 @@ public class CheckOutForm extends javax.swing.JFrame
                 }
             }
         });
-        
-       
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
