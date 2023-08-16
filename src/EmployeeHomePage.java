@@ -20,6 +20,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
     public EmployeeHomePage()
     {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -77,10 +78,12 @@ public class EmployeeHomePage extends javax.swing.JFrame
             this.dispose();
         } catch (ClassNotFoundException ex)
         {
-            Logger.getLogger(EmployeeHomePage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmployeeHomePage.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (SQLException ex)
         {
-            Logger.getLogger(EmployeeHomePage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmployeeHomePage.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRentalActionPerformed
 

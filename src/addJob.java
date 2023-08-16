@@ -217,13 +217,16 @@ public class addJob extends javax.swing.JFrame
 
             try
             {
-                data.enterJob(jName, jDesc, reqToolList, jobCode, randInt);
+                data.enterJob(jName, jDesc, reqToolList,
+                        jobCode, randInt);
             } catch (ClassNotFoundException ex)
             {
-                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(addJob.class.getName()).log(
+                        Level.SEVERE, null, ex);
             } catch (SQLException ex)
             {
-                Logger.getLogger(addJob.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(addJob.class.getName()).log(
+                        Level.SEVERE, null, ex);
             } finally
             {
                 txtJobName.setText("");
@@ -231,7 +234,8 @@ public class addJob extends javax.swing.JFrame
                 tblToolList.clearSelection();
                 lstJobCodes.clearSelection();
                 JFrame frame = new JFrame();
-                JOptionPane.showMessageDialog(frame, "Successfully added job to database!");
+                JOptionPane.showMessageDialog(frame,
+                        "Successfully added job to database!");
             }
         } else
         {
@@ -334,7 +338,8 @@ public class addJob extends javax.swing.JFrame
 
         DefaultTableModel dataModel = new DefaultTableModel(data, columnNames);
         tblToolList.setModel(dataModel);
-        tblToolList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblToolList.setSelectionMode(
+                ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     private String[] getSelectedRows()
@@ -347,7 +352,8 @@ public class addJob extends javax.swing.JFrame
 
         for (int rows = 0; rows < rowCount; rows++)
         {
-            list[rows] = model.getValueAt(selectedRows[rows], 0).toString();
+            list[rows] = model.getValueAt(
+                    selectedRows[rows], 0).toString();
         }
 
         return list;
