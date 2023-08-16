@@ -1,4 +1,7 @@
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /*
@@ -48,6 +51,13 @@ public class InventoryManagementPage extends javax.swing.JFrame
         lblIM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnCheckOut.setText("Check Out Materials");
+        btnCheckOut.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCheckOutActionPerformed(evt);
+            }
+        });
 
         btnCheckIn.setText("Check In Materials");
         btnCheckIn.addActionListener(new java.awt.event.ActionListener()
@@ -113,6 +123,26 @@ public class InventoryManagementPage extends javax.swing.JFrame
         this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnCheckInActionPerformed
+
+    private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckOutActionPerformed
+    {//GEN-HEADEREND:event_btnCheckOutActionPerformed
+        CheckOutForm frame;
+        try
+        {
+            frame = new CheckOutForm();
+            frame.setVisible(true);
+            this.setVisible(false);
+            this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+            this.dispose();
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnCheckOutActionPerformed
 
     /**
      * @param args the command line arguments

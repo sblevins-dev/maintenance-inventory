@@ -30,5 +30,51 @@ public class Tool
         this.quantity = quantity;
     }
     
+    @Override
+    public String toString()
+    {
+        return this.tool_name;
+    }
+    
+    public int getToolID()
+    {
+        return tool_id;
+    }
+    
+    public void setToolID(int tool_id)
+    {
+        this.tool_id = tool_id;
+    }
+    
+    public String getToolName()
+    {
+        return tool_name;
+    }
+    
+    public void setToolName(String tool_name)
+    {
+        this.tool_name = tool_name;
+    }
+    
+    public String getToolLocation()
+    {
+        return tool_location;
+    }
+    
+    public void setToolLocation(String tool_location)
+    {
+        this.tool_location = tool_location;
+    }
+    
+    public int getToolQuantity()
+    {
+        return quantity;
+    }
+    
+    public void setToolQuantity(int quantity)
+    {
+        this.quantity = quantity;
+    }
+    
     
 }
