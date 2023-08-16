@@ -29,6 +29,7 @@ public class CheckInForm extends javax.swing.JFrame
     public CheckInForm()
     {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -72,6 +73,13 @@ public class CheckInForm extends javax.swing.JFrame
 
         btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         lstID.setModel(rentalIDs);
         lstID.addListSelectionListener(new javax.swing.event.ListSelectionListener()
@@ -178,6 +186,15 @@ public class CheckInForm extends javax.swing.JFrame
             txaDetails.setText(output);
         }
     }//GEN-LAST:event_lstIDValueChanged
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBackActionPerformed
+    {//GEN-HEADEREND:event_btnBackActionPerformed
+        InventoryManagementPage frame = new InventoryManagementPage();
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments

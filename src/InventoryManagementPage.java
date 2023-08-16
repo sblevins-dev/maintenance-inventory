@@ -20,6 +20,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
     public InventoryManagementPage()
     {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
