@@ -154,7 +154,7 @@ public class dataIO
         // create list model
         ArrayList<Rental> rentals = new ArrayList<Rental>();
 
-        String strSQL = "SELECT * FROM rental WHERE emp_id=? AND status='Open'";
+        String strSQL = "SELECT * FROM rental WHERE emp_id=? AND status='open'";
         PreparedStatement pstmt = con.prepareStatement(strSQL);
         pstmt.setInt(1, id);
 
@@ -201,6 +201,33 @@ public class dataIO
         }
         
         return tools;
+    }
+    
+    public void updateRentalStatus(int id) 
+            throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+        
+        String strSQL2 = "UPDATE tool SET quantity = quantity + 1 "
+                + "WHERE tool_id IN (SELECT tool_id "
+                + "FROM rental_intermediary "
+                + "WHERE rental_id=? )";
+        PreparedStatement pstmt2 = con.prepareStatement(strSQL2);
+        pstmt2.setInt(1, id);
+        
+        pstmt2.execute();
+        
+        String strSQL = "UPDATE rental SET status=\"closed\" WHERE rental_id=?";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+        
+        
+        
+        pstmt.execute();
     }
 
 }

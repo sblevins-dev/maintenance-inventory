@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -70,6 +71,13 @@ public class CheckInForm extends javax.swing.JFrame
 
         btnCheckIn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCheckIn.setText("Check In");
+        btnCheckIn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCheckInActionPerformed(evt);
+            }
+        });
 
         btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBack.setText("Back");
@@ -140,6 +148,7 @@ public class CheckInForm extends javax.swing.JFrame
     private void btnRetrieveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRetrieveActionPerformed
     {//GEN-HEADEREND:event_btnRetrieveActionPerformed
 
+        txaDetails.setText("");
         try
         {
             int id = Integer.parseInt(txtEmpID.getText());
@@ -195,6 +204,31 @@ public class CheckInForm extends javax.swing.JFrame
         this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckInActionPerformed
+    {//GEN-HEADEREND:event_btnCheckInActionPerformed
+        dataIO data = new dataIO();
+        int index = lstID.getSelectedIndex();
+        Rental rent = rentalIDs.getElementAt(index);
+        
+        JFrame frame = new JFrame();
+        
+        try
+        {
+            data.updateRentalStatus(rent.getRentalID());
+            JOptionPane.showMessageDialog(frame, "Successfully checked-in rental!");
+            txaDetails.setText("Status: Closed");
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frame, "Class Error: ", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frame, "Database Error: ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnCheckInActionPerformed
 
     /**
      * @param args the command line arguments
