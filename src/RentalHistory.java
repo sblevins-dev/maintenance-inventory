@@ -22,7 +22,7 @@ public class RentalHistory extends javax.swing.JFrame
     {
         initComponents();
         this.setLocationRelativeTo(null);
-        pullRentalHistory();
+        //pullRentalHistory();
     }
 
     /**
@@ -127,40 +127,40 @@ public class RentalHistory extends javax.swing.JFrame
     private javax.swing.JTable tblRentals;
     // End of variables declaration//GEN-END:variables
 
-    private void pullRentalHistory() throws ClassNotFoundException, SQLException
-    {
-        dataIO dataResults = new dataIO();
-        
-        int id = 5;
-        
-        ResultSet results = dataResults.getRentals(id);
-        ResultSetMetaData metaData = results.getMetaData();
-        int columnCount = metaData.getColumnCount();
-
-        Vector<String> columnNames = new Vector<String>();
-
-        for (int column = 1; column <= columnCount; column++)
-        {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-
-        while (results.next())
-        {
-            Vector<Object> vector = new Vector<Object>();
-
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++)
-            {
-                vector.add(results.getObject(columnIndex));
-            }
-
-            data.add(vector);
-        }
-
-        DefaultTableModel dataModel = new DefaultTableModel(data, columnNames);
-        tblRentals.setModel(dataModel);
-        tblRentals.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-    }
+//    private void pullRentalHistory() throws ClassNotFoundException, SQLException
+//    {
+//        dataIO dataResults = new dataIO();
+//        
+//        int id = 5;
+//        
+//        ResultSet results = dataResults.getRentals(id);
+//        ResultSetMetaData metaData = results.getMetaData();
+//        int columnCount = metaData.getColumnCount();
+//
+//        Vector<String> columnNames = new Vector<String>();
+//
+//        for (int column = 1; column <= columnCount; column++)
+//        {
+//            columnNames.add(metaData.getColumnName(column));
+//        }
+//
+//        // data of the table
+//        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+//
+//        while (results.next())
+//        {
+//            Vector<Object> vector = new Vector<Object>();
+//
+//            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++)
+//            {
+//                vector.add(results.getObject(columnIndex));
+//            }
+//
+//            data.add(vector);
+//        }
+//
+//        DefaultTableModel dataModel = new DefaultTableModel(data, columnNames);
+//        tblRentals.setModel(dataModel);
+//        tblRentals.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//    }
 }

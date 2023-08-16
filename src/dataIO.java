@@ -144,7 +144,7 @@ public class dataIO
         pstmt.execute();
     }
 
-    public ResultSet getRentals(int id) throws ClassNotFoundException, SQLException
+    public ArrayList<Rental> getRentals(int id) throws ClassNotFoundException, SQLException
     {
         //check for the driver
         Class.forName("software.aws.rds.jdbc.mysql.Driver");
@@ -152,15 +152,55 @@ public class dataIO
         Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
 
         // create list model
-        DefaultListModel<String> tools = new DefaultListModel();
+        ArrayList<Rental> rentals = new ArrayList<Rental>();
 
-        String strSQL = "SELECT * FROM rental WHERE emp_id=?";
+        String strSQL = "SELECT * FROM rental WHERE emp_id=? AND status='Open'";
         PreparedStatement pstmt = con.prepareStatement(strSQL);
         pstmt.setInt(1, id);
 
-        ResultSet results = pstmt.executeQuery();
+        ResultSet rs = pstmt.executeQuery();
 
-        return results;
+        while (rs.next())
+        {
+            Rental rent = new Rental();
+
+            rent.setRentalID(rs.getInt(1));
+            rent.setEmpID(rs.getInt(2));
+            rent.setStatus(rs.getString(3));
+
+            rentals.add(rent);
+        }
+        con.close();
+
+        return rentals;
+    }
+    
+    public ArrayList getToolsList(int id) throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+
+        // create list model
+        ArrayList tools = new ArrayList();
+
+        String strSQL = "SELECT tool.tool_name FROM tool JOIN rental_intermediary"
+                + " WHERE rental_id=? && "
+                + "rental_intermediary.tool_id = tool.tool_id;";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next())
+        {
+            String tool = rs.getString(1);
+            tools.add(tool);
+            
+        }
+        
+        return tools;
     }
 
 }

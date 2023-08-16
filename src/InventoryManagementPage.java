@@ -5,18 +5,20 @@ import javax.swing.DefaultListModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Jake
  */
-public class InventoryManagementPage extends javax.swing.JFrame {
+public class InventoryManagementPage extends javax.swing.JFrame
+{
 
     DefaultListModel<Tool> lstTool = new DefaultListModel();
+
     /**
      * Creates new form InventoryManagementPage
      */
-    public InventoryManagementPage() {
+    public InventoryManagementPage()
+    {
         initComponents();
     }
 
@@ -27,7 +29,8 @@ public class InventoryManagementPage extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         lblIM = new javax.swing.JLabel();
         btnCheckOut = new javax.swing.JButton();
@@ -46,6 +49,13 @@ public class InventoryManagementPage extends javax.swing.JFrame {
         btnCheckOut.setText("Check Out Materials");
 
         btnCheckIn.setText("Check In Materials");
+        btnCheckIn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCheckInActionPerformed(evt);
+            }
+        });
 
         btnFindEmp.setText("Find Employee");
 
@@ -94,36 +104,55 @@ public class InventoryManagementPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckInActionPerformed
+    {//GEN-HEADEREND:event_btnCheckInActionPerformed
+        CheckInForm form = new CheckInForm();
+        form.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnCheckInActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(InventoryManagementPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(InventoryManagementPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(InventoryManagementPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(InventoryManagementPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new InventoryManagementPage().setVisible(true);
             }
         });

@@ -36,6 +36,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnRental.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRental.setText("Rentals");
         btnRental.addActionListener(new java.awt.event.ActionListener()
         {
@@ -50,16 +51,16 @@ public class EmployeeHomePage extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(62, 62, 62)
                 .addComponent(btnRental)
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(335, Short.MAX_VALUE)
+                .addContainerGap(352, Short.MAX_VALUE)
                 .addComponent(btnRental)
-                .addGap(86, 86, 86))
+                .addGap(60, 60, 60))
         );
 
         pack();

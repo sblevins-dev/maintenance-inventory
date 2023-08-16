@@ -1,14 +1,27 @@
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author nechi
  */
 public class CheckInForm extends javax.swing.JFrame
 {
+
+    DefaultListModel<Rental> rentalIDs = new DefaultListModel();
 
     /**
      * Creates new form CheckInForm
@@ -28,21 +41,143 @@ public class CheckInForm extends javax.swing.JFrame
     private void initComponents()
     {
 
+        txtEmpID = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnRetrieve = new javax.swing.JButton();
+        btnCheckIn = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstID = new javax.swing.JList<>();
+        txaDetails = new java.awt.TextArea();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtEmpID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Employee ID:");
+
+        btnRetrieve.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRetrieve.setText("Retrieve");
+        btnRetrieve.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnRetrieveActionPerformed(evt);
+            }
+        });
+
+        btnCheckIn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCheckIn.setText("Check In");
+
+        btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnBack.setText("Back");
+
+        lstID.setModel(rentalIDs);
+        lstID.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                lstIDValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(lstID);
+
+        txaDetails.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 655, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCheckIn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnRetrieve))
+                    .addComponent(txaDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnRetrieve))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                    .addComponent(txaDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCheckIn)
+                    .addComponent(btnBack))
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRetrieveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRetrieveActionPerformed
+    {//GEN-HEADEREND:event_btnRetrieveActionPerformed
+
+        try
+        {
+            int id = Integer.parseInt(txtEmpID.getText());
+            displayRentals(id);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRetrieveActionPerformed
+
+    private void lstIDValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_lstIDValueChanged
+    {//GEN-HEADEREND:event_lstIDValueChanged
+        //get selected items index num
+        int index = lstID.getSelectedIndex();
+
+        //if selected show details
+        if (index > -1)
+        {
+            Rental rent = rentalIDs.getElementAt(index);
+            String output = "";
+            try
+            {
+                dataIO data = new dataIO();
+                ArrayList tools = data.getToolsList(rent.getRentalID());
+                
+                txaDetails.setText("");
+                
+                for (int i = 0; i < tools.size(); i++)
+                {
+                    output += tools.get(i);
+                    output += "\n";
+                }
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //lstDetails.setText(rent.showRentalDetails(rent));
+            txaDetails.setText(output);
+        }
+    }//GEN-LAST:event_lstIDValueChanged
 
     /**
      * @param args the command line arguments
@@ -90,5 +225,37 @@ public class CheckInForm extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCheckIn;
+    private javax.swing.JButton btnRetrieve;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<Rental> lstID;
+    private java.awt.TextArea txaDetails;
+    private javax.swing.JTextField txtEmpID;
     // End of variables declaration//GEN-END:variables
+
+    private void displayRentals(int id) throws SQLException, ClassNotFoundException
+    {
+        try
+        {
+            dataIO data = new dataIO();
+            ArrayList<Rental> rent = data.getRentals(id);
+
+            //clear defaultlistmodel and text area
+            rentalIDs.clear();
+            //txaEmpDetails.setText("");
+
+            //copy each obj from the arraylist over to defauult list model
+            for (int i = 0; i < rent.size(); i++)
+            {
+                rentalIDs.addElement(rent.get(i));
+
+            }
+        } catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

@@ -250,12 +250,7 @@ try{
 
             //copy each obj from the arraylist over to defauult list model
             for (int i = 0; i < emps.size(); i++) {
-//                String fName = emps.get(i).getFName();
-//                String lName = emps.get(i).getLName();
-//                String fullName = fName + " " + lName;
-                System.out.println(emps.get(i));
                 empList.addElement(emps.get(i) );
-                //empList.set(i, emps.get(i).getFName());
             
             }
         }catch (SQLException ex) {
