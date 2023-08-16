@@ -200,6 +200,8 @@ public class dataIO
             
         }
         
+        con.close();
+        
         return tools;
     }
     
@@ -228,6 +230,64 @@ public class dataIO
         
         
         pstmt.execute();
+        
+        con.close();
+    }
+    
+    public void checkOutTools(int empID, Integer[] list, int rentalID) throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+        
+        String status = "open";
+        
+        String strSQL = "INSERT INTO rental (rental_id, emp_id, status) "
+                + "VALUES (?, ?, ?);";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, rentalID);
+        pstmt.setInt(2, empID);
+        pstmt.setString(3, status);
+        
+        pstmt.execute();
+        
+        updateTools(con, list);
+        addRental(con, list, rentalID);
+        
+        con.close();
+    }
+
+    private void updateTools(Connection con, Integer[] list) throws SQLException
+    {
+        
+        String strSQL2;
+        
+        for (int i = 0; i < list.length; i++)
+        {
+            strSQL2 = "UPDATE tool SET tool.quantity=tool.quantity - 1 "
+                + "WHERE tool_id=?;";
+            PreparedStatement pstmt2 = con.prepareStatement(strSQL2);
+            pstmt2.setInt(1, list[i]);
+            pstmt2.execute();
+        }
+    }
+
+    private void addRental(Connection con, Integer[] list, int rentalID) throws SQLException
+    {
+        String strSQL3 = "INSERT INTO rental_intermediary (rental_id, tool_id) "
+                + "VALUES (?, ?)";
+        
+        for (int i = 0; i < list.length; i++)
+        {
+            
+            
+            PreparedStatement pstmt3 = con.prepareStatement(strSQL3);
+            pstmt3.setInt(1, rentalID);
+            pstmt3.setInt(2, list[i]);
+            pstmt3.execute();
+        }
     }
 
 }

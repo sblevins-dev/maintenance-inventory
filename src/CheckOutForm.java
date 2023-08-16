@@ -1,9 +1,13 @@
 
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,12 +21,13 @@ public class CheckOutForm extends javax.swing.JFrame
 {
 
     DefaultListModel toolList = new DefaultListModel();
+    ArrayList<Tool> tools = new ArrayList();
 
     private void populateList() throws ClassNotFoundException, SQLException
     {
         dataIO data = new dataIO();
 
-        ArrayList<Tool> tools = new ArrayList();
+//        ArrayList<Tool> tools = new ArrayList();
         ResultSet td = data.getTools();
 
         while (td.next())
@@ -64,7 +69,7 @@ public class CheckOutForm extends javax.swing.JFrame
     {
 
         lblEmpID = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtEmpID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTools = new javax.swing.JList<>();
         lblTools = new javax.swing.JLabel();
@@ -76,7 +81,7 @@ public class CheckOutForm extends javax.swing.JFrame
         lblEmpID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblEmpID.setText("Employee ID:");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtEmpID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         lstTools.setModel(toolList);
         jScrollPane1.setViewportView(lstTools);
@@ -86,6 +91,13 @@ public class CheckOutForm extends javax.swing.JFrame
 
         btnCheckOut.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCheckOut.setText("Check Out");
+        btnCheckOut.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCheckOutActionPerformed(evt);
+            }
+        });
 
         btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBack.setText("Back");
@@ -115,7 +127,7 @@ public class CheckOutForm extends javax.swing.JFrame
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblEmpID)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,7 +136,7 @@ public class CheckOutForm extends javax.swing.JFrame
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpID)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmpID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,10 +160,51 @@ public class CheckOutForm extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckOutActionPerformed
+    {//GEN-HEADEREND:event_btnCheckOutActionPerformed
+        JFrame frame = new JFrame();
+        if (validateInputs())
+        {
+            int empID = Integer.parseInt(txtEmpID.getText());
+            Integer[] tools = getSelectedRows();
+            Random rand = new Random();
+            int rentalID = rand.nextInt(10000);
+
+            dataIO data = new dataIO();
+            try
+            {
+                data.checkOutTools(empID, tools, rentalID);
+
+                JOptionPane.showMessageDialog(frame,
+                        "Successfully checked out rental!");
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(
+                        CheckOutForm.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(frame, ex,
+                        "Class Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(CheckOutForm.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(frame, ex,
+                        "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else
+        {
+            JOptionPane.showMessageDialog(frame,
+                    "Please select correct information",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnCheckOutActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws ClassNotFoundException, SQLException
+    public static void main(String args[])
+            throws ClassNotFoundException, SQLException
     {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -193,10 +246,12 @@ public class CheckOutForm extends javax.swing.JFrame
                     new CheckOutForm().setVisible(true);
                 } catch (ClassNotFoundException ex)
                 {
-                    Logger.getLogger(CheckOutForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CheckOutForm.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 } catch (SQLException ex)
                 {
-                    Logger.getLogger(CheckOutForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CheckOutForm.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -207,9 +262,35 @@ public class CheckOutForm extends javax.swing.JFrame
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCheckOut;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblEmpID;
     private javax.swing.JLabel lblTools;
     private javax.swing.JList<String> lstTools;
+    private javax.swing.JTextField txtEmpID;
     // End of variables declaration//GEN-END:variables
+
+    private Integer[] getSelectedRows()
+    {
+        int[] indices = lstTools.getSelectedIndices();
+        int rowCount = indices.length;
+        Integer[] toolIDs = new Integer[rowCount];
+
+        for (int i = 0; i < indices.length; i++)
+        {
+            Tool tool = tools.get(indices[i]);
+            toolIDs[i] = tool.getToolID();
+        }
+
+        return toolIDs;
+    }
+
+    private boolean validateInputs()
+    {
+        if (txtEmpID.getText().isEmpty()
+                || lstTools.getSelectedIndices().length == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
