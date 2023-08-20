@@ -1,4 +1,6 @@
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 /*
@@ -32,5 +34,50 @@ public class Rental
         this.status = status;
         this.start_date = start_date;
         this.end_date = end_date;
+    }
+    
+    @Override
+    public String toString()
+    {
+        String id = String.valueOf(this.rental_id);
+        return id;
+    }
+    
+    public int getRentalID()
+    {
+        return this.rental_id;
+    }
+    
+    public void setRentalID(int id)
+    {
+        this.rental_id = id;
+    }
+    
+    public int getEmpID()
+    {
+        return this.emp_id;
+    }
+    
+    public void setEmpID(int emp_id)
+    {
+        this.emp_id = emp_id;
+    }
+    
+    public String getStatus()
+    {
+        return this.status;
+    }
+    
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+    
+    public String showRentalDetails(int id) throws ClassNotFoundException, SQLException
+    {
+        
+        System.out.println();
+        
+        return "hello";
     }
 }

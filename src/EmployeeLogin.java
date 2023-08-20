@@ -1,3 +1,9 @@
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -113,17 +119,10 @@ public class EmployeeLogin extends javax.swing.JFrame
         // TODO add your handling code here:
         String username = txtUsername.getText();
         var password = Integer.parseInt(pfLogin.getText());
-       // if(validateInputs() == false){
-         //   return;
-        //}
-        if((password > 10000 && password < 20000) && ("Admin".equals(username) || "admin".equals(username))){
-             AdminHomePage adminFrame  = new AdminHomePage();
-             adminFrame.setVisible(true);
-             this.setVisible(false);
-             this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
-             this.dispose();
-            
-       }
+       if(validateInputs(username, password) == false){
+           JOptionPane.showMessageDialog(this, "Incorrect username or password.","Credential Error:" , JOptionPane.ERROR_MESSAGE);
+        }
+      
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -183,7 +182,35 @@ public class EmployeeLogin extends javax.swing.JFrame
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    private boolean validateInputs() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private boolean validateInputs(String username, int password) {
+          if((password > 10000 && password < 20000) && ("Admin".equals(username) || "admin".equals(username))){
+             AdminHomePage adminFrame  = new AdminHomePage();
+             adminFrame.setVisible(true);
+             this.setVisible(false);
+             this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+             this.dispose();
+             return true;
+            
+       }
+        else if((password > 20000 && password < 30000) && "inventory management".equalsIgnoreCase(username) ){
+        InventoryManagementPage invManPage = new InventoryManagementPage();
+        invManPage.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE );
+        this.dispose();
+        return true;
+    }
+        else if((password>30000 && password < 40000)){
+          EmployeeHomePage empHome = new EmployeeHomePage();
+          empHome.setVisible(true);
+          this.setVisible(false);
+          this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+          this.dispose(); 
+          return true;
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Not a valid username or password", "Credential Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 }
