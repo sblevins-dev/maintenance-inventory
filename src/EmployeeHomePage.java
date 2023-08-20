@@ -1,7 +1,10 @@
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,6 +17,8 @@ import java.util.logging.Logger;
 public class EmployeeHomePage extends javax.swing.JFrame
 {
 
+    DefaultListModel<Job> jobList = new DefaultListModel();
+
     /**
      * Creates new form EmployeeHomePage
      */
@@ -21,6 +26,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
     {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadJobs();
     }
 
     /**
@@ -33,17 +39,54 @@ public class EmployeeHomePage extends javax.swing.JFrame
     private void initComponents()
     {
 
-        btnRental = new javax.swing.JButton();
+        lblJobList = new javax.swing.JLabel();
+        lblJobDetails = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaJobDetails = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstJobs = new javax.swing.JList<>();
+        btnSelectJob = new javax.swing.JButton();
+        btnRental1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnRental.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnRental.setText("Rentals");
-        btnRental.addActionListener(new java.awt.event.ActionListener()
+        lblJobList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblJobList.setText("Job List: ");
+
+        lblJobDetails.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblJobDetails.setText("Details: ");
+
+        txaJobDetails.setColumns(20);
+        txaJobDetails.setRows(5);
+        jScrollPane1.setViewportView(txaJobDetails);
+
+        lstJobs.setModel(jobList);
+        lstJobs.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                lstJobsValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(lstJobs);
+
+        btnSelectJob.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSelectJob.setText("Select Job");
+        btnSelectJob.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnRentalActionPerformed(evt);
+                btnSelectJobActionPerformed(evt);
+            }
+        });
+
+        btnRental1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRental1.setText("Rentals");
+        btnRental1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnRental1ActionPerformed(evt);
             }
         });
 
@@ -51,24 +94,69 @@ public class EmployeeHomePage extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(btnRental)
-                .addContainerGap(348, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSelectJob, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblJobList)
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblJobDetails)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(btnRental1)))
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(352, Short.MAX_VALUE)
-                .addComponent(btnRental)
-                .addGap(60, 60, 60))
+                .addContainerGap(365, Short.MAX_VALUE)
+                .addComponent(btnSelectJob, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(54, 54, 54)
+                    .addComponent(btnRental1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblJobList)
+                        .addComponent(lblJobDetails))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                    .addContainerGap(117, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRentalActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRentalActionPerformed
-    {//GEN-HEADEREND:event_btnRentalActionPerformed
+    private void lstJobsValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_lstJobsValueChanged
+    {//GEN-HEADEREND:event_lstJobsValueChanged
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        int index = lstJobs.getSelectedIndex();
+
+        //if selected show details
+        if (index > -1)
+        {
+            Job job = jobList.getElementAt(index);
+            txaJobDetails.setText(job.showJobDetails());
+        }
+    }//GEN-LAST:event_lstJobsValueChanged
+
+    private void btnRental1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRental1ActionPerformed
+    {//GEN-HEADEREND:event_btnRental1ActionPerformed
         try
         {
             RentalHistory rh = new RentalHistory();
@@ -85,7 +173,21 @@ public class EmployeeHomePage extends javax.swing.JFrame
             Logger.getLogger(EmployeeHomePage.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnRentalActionPerformed
+    }//GEN-LAST:event_btnRental1ActionPerformed
+
+    private void btnSelectJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSelectJobActionPerformed
+    {//GEN-HEADEREND:event_btnSelectJobActionPerformed
+        // TODO add your handling code here:
+        Job selectedJob = lstJobs.getSelectedValue();
+        login lgn = new login();
+        int empID = lgn.getPassword();
+        if (selectedJob != null)
+        {
+            dataIO data = new dataIO();
+            data.addEmpToJob(selectedJob.getJob_name(), empID);
+            JOptionPane.showMessageDialog(this, "You have selected " + selectedJob.getJob_name() + ".", "Added " + empID + " to job.", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSelectJobActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,7 +234,39 @@ public class EmployeeHomePage extends javax.swing.JFrame
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRental;
+    private javax.swing.JButton btnRental1;
+    private javax.swing.JButton btnSelectJob;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblJobDetails;
+    private javax.swing.JLabel lblJobList;
+    private javax.swing.JList<Job> lstJobs;
+    private javax.swing.JTextArea txaJobDetails;
     // End of variables declaration//GEN-END:variables
+
+    public void loadJobs()
+    {
+        try
+        {
+            dataIO data = new dataIO();
+            ArrayList<Job> jobs = data.getJobs();
+
+            //clear defaultlistmodel and text area
+            jobList.clear();
+            txaJobDetails.setText("");
+
+            //copy each obj from the arraylist over to defauult list model
+            for (int i = 0; i < jobs.size(); i++)
+            {
+                jobList.addElement(jobs.get(i));
+
+            }
+        } catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

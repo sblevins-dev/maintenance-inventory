@@ -7,11 +7,8 @@
  *
  * @author Jake
  */
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 public class dataIO
 {
@@ -146,6 +143,52 @@ public class dataIO
         pstmt.setInt(4, reqMatID);
 
         pstmt.execute();
+    }
+    
+    public ArrayList<Job>getJobs() throws SQLException{
+        
+         ArrayList<Job> jobArr = new ArrayList<Job>();
+       
+        //connect
+        Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM job";
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        while(rs.next()){
+            Job job = new Job(); 
+           
+            job.setJob_id(rs.getInt(1));
+            job.setJob_name(rs.getString(2));
+            job.setJob_desc(rs.getString(3));
+            job.setEmp_id(rs.getInt(4));
+            job.setJob_code(rs.getInt(5));
+            job.setReq_mat_id(rs.getInt(6));
+            
+            jobArr.add(job);
+        }
+        con.close();
+        
+        return jobArr;
+    }
+    
+    public void addEmpToJob(String job_name, int empID){
+        
+        try {
+            Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+            PreparedStatement stmt = con.prepareStatement("UPDATE job SET emp_id=? WHERE job_name=?");
+            stmt.setInt(1, empID);
+            stmt.setString(2, job_name);
+           
+            
+            stmt.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(dataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
     }
 
     public ArrayList<Rental> getRentals(int id)
