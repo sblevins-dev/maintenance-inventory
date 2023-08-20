@@ -1,15 +1,7 @@
 
-import javax.swing.JOptionPane;
-import java.io.IOException;
 import java.sql.*;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -19,12 +11,14 @@ import javax.swing.JOptionPane;
  *
  * @author Jake
  */
-public class addEmployee extends javax.swing.JFrame {
+public class addEmployee extends javax.swing.JFrame
+{
 
     /**
      * Creates new form addEmployee
      */
-    public addEmployee() {
+    public addEmployee()
+    {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -177,48 +171,66 @@ public class addEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       Employee emp = createEmployee();
-       try{
-           dataIO data = new dataIO();
-           data.add(emp);
-       }catch(SQLException ex){
-           JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-       }catch (ClassNotFoundException ex) {
+        if (validateInput() == false)
+        {
+            return;
+        }
+
+        Employee emp = createEmployee();
+        try
+        {
+            dataIO data = new dataIO();
+            data.add(emp);
+        } catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex)
+        {
             JOptionPane.showMessageDialog(this, "Driver Not Found. Error: " + ex.getMessage(), "Driver Error", JOptionPane.ERROR_MESSAGE);
         }
-       
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(addEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(addEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(addEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(addEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new addEmployee().setVisible(true);
             }
         });
@@ -243,7 +255,8 @@ public class addEmployee extends javax.swing.JFrame {
     private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 
-    private void clear() {
+    private void clear()
+    {
         txtFirstName.setText("");
         this.txtFirstName.requestFocusInWindow();
         txtLastName.setText("");
@@ -252,22 +265,63 @@ public class addEmployee extends javax.swing.JFrame {
         //this might break this f**king thing but we will see. 
         comboEmpCode.setSelectedIndex(0);
     }
-    
-    private Employee createEmployee(){
+
+    private Employee createEmployee()
+    {
         String fname = txtFirstName.getText();
         String lname = txtLastName.getText();
         String phone = txtPhone.getText();
         String address = txtAddress.getText();
-        String val = (String)comboEmpCode.getSelectedItem();
+        String val = (String) comboEmpCode.getSelectedItem();
         int emp_code = Integer.parseInt(comboEmpCode.getSelectedItem().toString());
-        
-        
-        
+
         Employee emp = new Employee(0, fname, lname, phone, address, emp_code);
-        return emp; 
+        return emp;
     }
-    
-   // private boolean validateInput(){
-        
-  //  }
+
+    private boolean validateInput()
+    {
+        String fname = txtFirstName.getText();
+        String lname = txtLastName.getText();
+        String phone = txtPhone.getText();
+        String address = txtAddress.getText();
+        String emp_code = comboEmpCode.getSelectedItem().toString();
+
+        if (fname.isBlank())
+        {
+            JOptionPane.showMessageDialog(this, "Enter a first name.", "Name Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (lname.isBlank())
+        {
+            JOptionPane.showMessageDialog(this, "Enter a last name.", "Name Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (phone.isBlank())
+        {
+            JOptionPane.showMessageDialog(this, "Enter a phone number.", "Phone Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (phone.length() < 10)
+        {
+            JOptionPane.showMessageDialog(this, "Phone must contain 10 digits.", "Phone Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+        if (address.isBlank())
+        {
+            JOptionPane.showMessageDialog(this, "Enter an address.", "Address Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (address.length() < 6)
+        {
+            JOptionPane.showMessageDialog(this, "Address must be 6 characters or more.", "Address Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if ("Choose Employee Code".equals(emp_code))
+        {
+            JOptionPane.showMessageDialog(this, "Select an employee code", "Employee Code Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 }

@@ -11,18 +11,20 @@ import java.sql.*;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Jake
  */
-public class AdminHomePage extends javax.swing.JFrame {
+public class AdminHomePage extends javax.swing.JFrame
+{
+
     DefaultListModel<Employee> empList = new DefaultListModel();
-   
+
     /**
      * Creates new form AdminHomePage
      */
-    public AdminHomePage() {
+    public AdminHomePage()
+    {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -70,8 +72,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         });
 
         btnTerminate.setText("Terminate");
-        btnTerminate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnTerminate.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnTerminateActionPerformed(evt);
             }
         });
@@ -89,6 +93,13 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblName.setText("Welcome to the GB Manufacturing Administrator Access Page.   ");
 
         employeeList.setModel(empList);
+        employeeList.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                employeeListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(employeeList);
 
         lblEmpList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -102,8 +113,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblEmpDetails.setText("Employee Details: ");
 
         btnLoadEmps.setText("Load Emps");
-        btnLoadEmps.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnLoadEmps.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnLoadEmpsActionPerformed(evt);
             }
         });
@@ -176,47 +189,56 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private void btnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmpActionPerformed
 
-        addEmployee frame  = new addEmployee();
-             frame.setVisible(true);
-             this.setVisible(false);
-             this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
-             this.dispose();
+        addEmployee frame = new addEmployee();
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+        loadEmps();
     }//GEN-LAST:event_btnAddEmpActionPerformed
-
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(AdminHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(AdminHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(AdminHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(AdminHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new AdminHomePage().setVisible(true);
-                
-                
+
             }
         });
     }
@@ -239,37 +261,43 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JTextArea txaEmpDetails;
     // End of variables declaration//GEN-END:variables
 
-private void loadEmps(){
-try{
-        dataIO data = new dataIO();
-         ArrayList<Employee> emps = data.getList();
+    private void loadEmps()
+    {
+        try
+        {
+            dataIO data = new dataIO();
+            ArrayList<Employee> emps = data.getList();
 
             //clear defaultlistmodel and text area
             empList.clear();
             txaEmpDetails.setText("");
 
             //copy each obj from the arraylist over to defauult list model
-            for (int i = 0; i < emps.size(); i++) {
-                empList.addElement(emps.get(i) );
-            
+            for (int i = 0; i < emps.size(); i++)
+            {
+                empList.addElement(emps.get(i));
+
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                     "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-}
-
-private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
-    //get selected items index num
-    int index = employeeList.getSelectedIndex();
-    
-    //if selected show details
-    if(index > -1){
-        Employee emp = empList.getElementAt(index);
-        txaEmpDetails.setText(emp.showEmpDetails());
     }
-    
-}
+
+    private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt)
+    {
+        //get selected items index num
+        int index = employeeList.getSelectedIndex();
+
+        //if selected show details
+        if (index > -1)
+        {
+            Employee emp = empList.getElementAt(index);
+            txaEmpDetails.setText(emp.showEmpDetails());
+        }
+
+    }
 
     private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
     {//GEN-HEADEREND:event_btnAddJobActionPerformed
@@ -290,25 +318,41 @@ private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
         this.dispose();
     }//GEN-LAST:event_btnAddJobActionPerformed
     private void btnTerminateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminateActionPerformed
-            try{
-                //get object
-                Employee empToTerminate = employeeList.getSelectedValue();
-                
-                //When slected delete and clear txa
-                if(empToTerminate != null){
-                    dataIO data = new dataIO();
-                    data.delete(empToTerminate.getEmployeeID());
-                    txaEmpDetails.setText("");
-                    loadEmps(); 
-                }
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Error:" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        try
+        {
+            //get object
+            Employee empToTerminate = employeeList.getSelectedValue();
+
+            //When slected delete and clear txa
+            if (empToTerminate != null)
+            {
+                dataIO data = new dataIO();
+                data.delete(empToTerminate.getEmployeeID());
+                txaEmpDetails.setText("");
+                loadEmps();
             }
-        
+        } catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error:" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnTerminateActionPerformed
 
     private void btnLoadEmpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadEmpsActionPerformed
         // TODO add your handling code here:
         loadEmps();
     }//GEN-LAST:event_btnLoadEmpsActionPerformed
+
+    private void employeeListValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_employeeListValueChanged
+    {//GEN-HEADEREND:event_employeeListValueChanged
+        // TODO add your handling code here:
+        int index = employeeList.getSelectedIndex();
+
+        //if selected show details
+        if (index > -1)
+        {
+            Employee emp = empList.getElementAt(index);
+            txaEmpDetails.setText(emp.showEmpDetails());
+        }
+    }//GEN-LAST:event_employeeListValueChanged
 }
