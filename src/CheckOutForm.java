@@ -153,7 +153,7 @@ public class CheckOutForm extends javax.swing.JFrame
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnBackActionPerformed
     {//GEN-HEADEREND:event_btnBackActionPerformed
-        AdminHomePage frame = new AdminHomePage();
+        InventoryManagementPage frame = new InventoryManagementPage();
         frame.setVisible(true);
         this.setVisible(false);
         this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
