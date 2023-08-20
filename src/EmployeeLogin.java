@@ -29,7 +29,8 @@ public class EmployeeLogin extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         pfLogin = new javax.swing.JPasswordField();
@@ -39,6 +40,7 @@ public class EmployeeLogin extends javax.swing.JFrame
         btnLogin = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mniLogout = new javax.swing.JMenuItem();
         mniEdit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,8 +54,10 @@ public class EmployeeLogin extends javax.swing.JFrame
         lblUsername.setText("Username: ");
 
         btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnLogin.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnLoginActionPerformed(evt);
             }
         });
@@ -91,6 +95,10 @@ public class EmployeeLogin extends javax.swing.JFrame
         );
 
         jMenu1.setText("File");
+
+        mniLogout.setText("Logout");
+        jMenu1.add(mniLogout);
+
         jMenuBar1.add(jMenu1);
 
         mniEdit.setText("Edit");
@@ -179,6 +187,7 @@ public class EmployeeLogin extends javax.swing.JFrame
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JMenu mniEdit;
+    private javax.swing.JMenuItem mniLogout;
     private javax.swing.JPasswordField pfLogin;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

@@ -30,7 +30,8 @@ public class addEmployee extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         txtFirstName = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
@@ -45,8 +46,9 @@ public class addEmployee extends javax.swing.JFrame
         btnAdd = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         lblEmpInfo = new javax.swing.JLabel();
-        addEmployeeMenuBar = new javax.swing.JMenuBar();
+        jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mniLogout = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -69,15 +71,19 @@ public class addEmployee extends javax.swing.JFrame
         lblEmployeeCode.setText("Employee Code:");
 
         btnAdd.setText("Add Employee");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAdd.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnAddActionPerformed(evt);
             }
         });
 
         btnClear.setText("Clear");
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnClear.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnClearActionPerformed(evt);
             }
         });
@@ -86,14 +92,16 @@ public class addEmployee extends javax.swing.JFrame
         lblEmpInfo.setText("New Employee Information: ");
 
         jMenu1.setText("File");
-        addEmployeeMenuBar.add(jMenu1);
+
+        mniLogout.setText("Logout");
+        jMenu1.add(mniLogout);
+
+        jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
-        addEmployeeMenuBar.add(jMenu2);
+        jMenuBar1.add(jMenu2);
 
-        setJMenuBar(addEmployeeMenuBar);
-        addEmployeeMenuBar.getAccessibleContext().setAccessibleName("");
-        addEmployeeMenuBar.getAccessibleContext().setAccessibleDescription("");
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,7 +142,6 @@ public class addEmployee extends javax.swing.JFrame
                 .addComponent(lblFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -237,18 +244,19 @@ public class addEmployee extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar addEmployeeMenuBar;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
     private javax.swing.JComboBox<String> comboEmpCode;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblEmpInfo;
     private javax.swing.JLabel lblEmployeeCode;
     private javax.swing.JLabel lblFirstName;
     private javax.swing.JLabel lblLastName;
     private javax.swing.JLabel lblPhone;
+    private javax.swing.JMenuItem mniLogout;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;

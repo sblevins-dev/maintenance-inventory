@@ -51,6 +51,10 @@ public class CheckInForm extends javax.swing.JFrame
         jScrollPane3 = new javax.swing.JScrollPane();
         lstID = new javax.swing.JList<>();
         txaDetails = new java.awt.TextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mniLogout = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +105,18 @@ public class CheckInForm extends javax.swing.JFrame
 
         txaDetails.setEditable(false);
 
+        jMenu1.setText("File");
+
+        mniLogout.setText("Logout");
+        jMenu1.add(mniLogout);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,7 +151,7 @@ public class CheckInForm extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                     .addComponent(txaDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCheckIn)
                     .addComponent(btnBack))
@@ -280,8 +296,12 @@ public class CheckInForm extends javax.swing.JFrame
     private javax.swing.JButton btnCheckIn;
     private javax.swing.JButton btnRetrieve;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<Rental> lstID;
+    private javax.swing.JMenuItem mniLogout;
     private java.awt.TextArea txaDetails;
     private javax.swing.JTextField txtEmpID;
     // End of variables declaration//GEN-END:variables

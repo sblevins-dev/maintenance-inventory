@@ -53,6 +53,7 @@ public class AdminHomePage extends javax.swing.JFrame
         btnLoadEmps = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mniLogout = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -122,6 +123,10 @@ public class AdminHomePage extends javax.swing.JFrame
         });
 
         jMenu1.setText("File");
+
+        mniLogout.setText("Logout");
+        jMenu1.add(mniLogout);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -258,6 +263,7 @@ public class AdminHomePage extends javax.swing.JFrame
     private javax.swing.JLabel lblEmpList;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JMenuItem mniLogout;
     private javax.swing.JTextArea txaEmpDetails;
     // End of variables declaration//GEN-END:variables
 

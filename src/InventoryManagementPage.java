@@ -42,6 +42,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
         btnFindEmp = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mniLogout = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,6 +72,10 @@ public class InventoryManagementPage extends javax.swing.JFrame
         btnFindEmp.setText("Find Employee");
 
         jMenu1.setText("File");
+
+        mniLogout.setText("Logout");
+        jMenu1.add(mniLogout);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -197,5 +202,6 @@ public class InventoryManagementPage extends javax.swing.JFrame
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblIM;
+    private javax.swing.JMenuItem mniLogout;
     // End of variables declaration//GEN-END:variables
 }
