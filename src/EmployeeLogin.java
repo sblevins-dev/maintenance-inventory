@@ -1,4 +1,7 @@
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -140,9 +143,18 @@ public class EmployeeLogin extends javax.swing.JFrame
         lgn.setUsername(username);
         int password = Integer.parseInt(pfLogin.getText());
         lgn.setPassword(password);
-        if (validateInputs(username, password) == false)
+        try
         {
-            JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Credential Error:", JOptionPane.ERROR_MESSAGE);
+            if (validateInputs(username, password) == false)
+            {
+                JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Credential Error:", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(EmployeeLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(EmployeeLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -206,7 +218,7 @@ public class EmployeeLogin extends javax.swing.JFrame
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    private boolean validateInputs(String username, int password)
+    private boolean validateInputs(String username, int password) throws SQLException, ClassNotFoundException
     {
         if ((password > 10000 && password < 20000) && ("Admin".equals(username) || "admin".equals(username)))
         {
@@ -227,6 +239,11 @@ public class EmployeeLogin extends javax.swing.JFrame
             return true;
         } else if ((password > 30000 && password < 40000))
         {
+            dataIO data = new dataIO();
+            String user = txtUsername.getText();
+            char[] pw = pfLogin.getPassword();
+            data.loginEmp(user, pw);
+            System.out.println(Employee.getFullName());
             EmployeeHomePage empHome = new EmployeeHomePage();
             empHome.setVisible(true);
             this.setVisible(false);
