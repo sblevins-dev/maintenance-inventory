@@ -5,12 +5,9 @@
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -206,7 +203,7 @@ public class RentalHistory extends javax.swing.JFrame
     {
         dataIO dataResults = new dataIO();
 
-        int id = 30001;
+        int id = Employee.getEmployeeID();
         ArrayList<Rental> rentals = dataResults.getRentalHistory(id);
 
         rentalIdList.clear();

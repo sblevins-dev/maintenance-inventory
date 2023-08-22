@@ -27,6 +27,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
         initComponents();
         this.setLocationRelativeTo(null);
         loadJobs();
+        lblName.setText(Employee.getFullName());
     }
 
     /**
@@ -47,6 +48,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
         lstJobs = new javax.swing.JList<>();
         btnSelectJob = new javax.swing.JButton();
         btnRental1 = new javax.swing.JButton();
+        lblName = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniLogout = new javax.swing.JMenuItem();
@@ -94,6 +96,8 @@ public class EmployeeHomePage extends javax.swing.JFrame
             }
         });
 
+        lblName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
         jMenu1.setText("File");
 
         mniLogout.setText("Logout");
@@ -110,9 +114,13 @@ public class EmployeeHomePage extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSelectJob, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnSelectJob, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -136,7 +144,9 @@ public class EmployeeHomePage extends javax.swing.JFrame
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(342, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
                 .addComponent(btnSelectJob, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,6 +271,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblJobDetails;
     private javax.swing.JLabel lblJobList;
+    private javax.swing.JLabel lblName;
     private javax.swing.JList<Job> lstJobs;
     private javax.swing.JMenuItem mniLogout;
     private javax.swing.JTextArea txaJobDetails;

@@ -41,6 +41,35 @@ public class dataIO
 
     }
 
+    public void loginEmp(String fn, char[] pw) throws SQLException, ClassNotFoundException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+
+        //connect
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+        String sql = "SELECT * FROM employee WHERE emp_fname=? AND emp_id=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, fn);
+        pstmt.setString(2, String.valueOf(pw));
+        ResultSet rs = pstmt.executeQuery();
+
+        Employee emp = new Employee();
+
+        while (rs.next())
+        {
+            emp.setEmployeeID(rs.getInt(1));
+            emp.setFName(rs.getString(2));
+            emp.setLName(rs.getString(3));
+            emp.setPhone(rs.getString(4));
+            emp.setAddress(rs.getString(5));
+            emp.setEmpCode(rs.getInt(6));
+        }
+
+        con.close();
+    }
+
     public ArrayList<Employee> getList() throws SQLException
     {
         ArrayList<Employee> empArr = new ArrayList<Employee>();
@@ -144,51 +173,55 @@ public class dataIO
 
         pstmt.execute();
     }
-    
-    public ArrayList<Job>getJobs() throws SQLException{
-        
-         ArrayList<Job> jobArr = new ArrayList<Job>();
-       
+
+    public ArrayList<Job> getJobs() throws SQLException
+    {
+
+        ArrayList<Job> jobArr = new ArrayList<Job>();
+
         //connect
         Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
         Statement stmt = con.createStatement();
         String sql = "SELECT * FROM job";
         ResultSet rs = stmt.executeQuery(sql);
-        
-        while(rs.next()){
-            Job job = new Job(); 
-           
+
+        while (rs.next())
+        {
+            Job job = new Job();
+
             job.setJob_id(rs.getInt(1));
             job.setJob_name(rs.getString(2));
             job.setJob_desc(rs.getString(3));
             job.setEmp_id(rs.getInt(4));
             job.setJob_code(rs.getInt(5));
             job.setReq_mat_id(rs.getInt(6));
-            
+
             jobArr.add(job);
         }
         con.close();
-        
+
         return jobArr;
     }
-    
-    public void addEmpToJob(String job_name, int empID){
-        
-        try {
+
+    public void addEmpToJob(String job_name, int empID)
+    {
+
+        try
+        {
             Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
             PreparedStatement stmt = con.prepareStatement("UPDATE job SET emp_id=? WHERE job_name=?");
             stmt.setInt(1, empID);
             stmt.setString(2, job_name);
-           
-            
+
             stmt.executeUpdate();
-            
+
             con.close();
-            
-        } catch (SQLException ex) {
+
+        } catch (SQLException ex)
+        {
             java.util.logging.Logger.getLogger(dataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public ArrayList<Rental> getRentals(int id)
