@@ -203,7 +203,7 @@ public class RentalHistory extends javax.swing.JFrame
     {
         dataIO dataResults = new dataIO();
 
-        int id = Employee.getEmployeeID();
+        int id = CurrentEmployee.getEmployeeID();
         ArrayList<Rental> rentals = dataResults.getRentalHistory(id);
 
         rentalIdList.clear();

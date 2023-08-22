@@ -55,7 +55,7 @@ public class dataIO
         pstmt.setString(2, String.valueOf(pw));
         ResultSet rs = pstmt.executeQuery();
 
-        Employee emp = new Employee();
+        CurrentEmployee emp = new CurrentEmployee();
 
         while (rs.next())
         {
@@ -93,6 +93,7 @@ public class dataIO
             emp.setEmpCode(rs.getInt(6));
 
             empArr.add(emp);
+            System.out.println(emp);
         }
         con.close();
 
