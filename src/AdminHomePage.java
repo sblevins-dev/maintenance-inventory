@@ -3,6 +3,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,6 +23,7 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     public AdminHomePage() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -30,7 +33,8 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         lblTitle = new javax.swing.JLabel();
         btnAddEmp = new javax.swing.JButton();
@@ -56,8 +60,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
 
         btnAddEmp.setText("Add Employee");
-        btnAddEmp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddEmp.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnAddEmpActionPerformed(evt);
             }
         });
@@ -70,6 +76,13 @@ public class AdminHomePage extends javax.swing.JFrame {
         });
 
         btnAddJob.setText("Add Job");
+        btnAddJob.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAddJobActionPerformed(evt);
+            }
+        });
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblName.setText("Welcome to the GB Manufacturing Administrator Access Page.   ");
@@ -169,28 +182,6 @@ public class AdminHomePage extends javax.swing.JFrame {
              this.dispose();
     }//GEN-LAST:event_btnAddEmpActionPerformed
 
-    private void btnTerminateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminateActionPerformed
-            try{
-                //get object
-                Employee empToTerminate = employeeList.getSelectedValue();
-                
-                //When slected delete and clear txa
-                if(empToTerminate != null){
-                    dataIO data = new dataIO();
-                    data.delete(empToTerminate.getEmployeeID());
-                    txaEmpDetails.setText("");
-                    loadEmps(); 
-                }
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(this, "Error:" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-            }
-        
-    }//GEN-LAST:event_btnTerminateActionPerformed
-
-    private void btnLoadEmpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadEmpsActionPerformed
-        // TODO add your handling code here:
-        loadEmps();
-    }//GEN-LAST:event_btnLoadEmpsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,3 +271,44 @@ private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
 }
     
 }
+
+    private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
+    {//GEN-HEADEREND:event_btnAddJobActionPerformed
+        addJob frame = null;
+        try
+        {
+            frame = new addJob();
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(AdminHomePage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(AdminHomePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnAddJobActionPerformed
+    private void btnTerminateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminateActionPerformed
+            try{
+                //get object
+                Employee empToTerminate = employeeList.getSelectedValue();
+                
+                //When slected delete and clear txa
+                if(empToTerminate != null){
+                    dataIO data = new dataIO();
+                    data.delete(empToTerminate.getEmployeeID());
+                    txaEmpDetails.setText("");
+                    loadEmps(); 
+                }
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(this, "Error:" + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        
+    }//GEN-LAST:event_btnTerminateActionPerformed
+
+    private void btnLoadEmpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadEmpsActionPerformed
+        // TODO add your handling code here:
+        loadEmps();
+    }//GEN-LAST:event_btnLoadEmpsActionPerformed
