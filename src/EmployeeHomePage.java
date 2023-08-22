@@ -27,7 +27,7 @@ public class EmployeeHomePage extends javax.swing.JFrame
         initComponents();
         this.setLocationRelativeTo(null);
         loadJobs();
-        lblName.setText(Employee.getFullName());
+        lblName.setText(CurrentEmployee.getFullName());
     }
 
     /**

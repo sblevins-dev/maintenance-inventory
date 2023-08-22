@@ -243,7 +243,6 @@ public class EmployeeLogin extends javax.swing.JFrame
             String user = txtUsername.getText();
             char[] pw = pfLogin.getPassword();
             data.loginEmp(user, pw);
-            System.out.println(Employee.getFullName());
             EmployeeHomePage empHome = new EmployeeHomePage();
             empHome.setVisible(true);
             this.setVisible(false);

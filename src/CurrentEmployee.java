@@ -5,19 +5,18 @@
 
 /**
  *
- * @author Jake
+ * @author nechi
  */
-//this is the public class for the employees that are going to have the information added
-//in the add employee screen
-public class Employee {
-    private int employeeID;
-    private String FName;
-    private String LName; 
-    private String phone;
-    private String address; 
-    private int empCode;
+public class CurrentEmployee
+{
+    private static int employeeID;
+    private static String FName;
+    private static String LName; 
+    private static String phone;
+    private static String address; 
+    private static int empCode;
     
-    public Employee(){
+    public CurrentEmployee(){
         employeeID = 0;
         FName = "N/A";
         LName = "N/A";
@@ -33,7 +32,7 @@ public class Employee {
     }
     
     //parameterized constructor
-    public Employee(int employeeID, String FName, String LName, String phone, String address, int empCode){
+    public CurrentEmployee(int employeeID, String FName, String LName, String phone, String address, int empCode){
         this.employeeID = employeeID;
         this.FName = FName;
         this.LName = LName;
@@ -42,7 +41,7 @@ public class Employee {
         this.empCode = empCode; 
     }
     //all getters and setters for the employee class
-    public int getEmployeeID() {
+    public static int getEmployeeID() {
         return employeeID;
     }
 
@@ -54,7 +53,7 @@ public class Employee {
         return FName;
     }
     
-    public String getFullName() {
+    public static String getFullName() {
         return FName + " " + LName;
     }
 
