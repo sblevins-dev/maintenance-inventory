@@ -33,8 +33,7 @@ public class AdminHomePage extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         lblTitle = new javax.swing.JLabel();
         btnAddEmp = new javax.swing.JButton();
@@ -60,10 +59,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblTitle.setBorder(new javax.swing.border.MatteBorder(null));
 
         btnAddEmp.setText("Add Employee");
-        btnAddEmp.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnAddEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddEmpActionPerformed(evt);
             }
         });
@@ -76,10 +73,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         });
 
         btnAddJob.setText("Add Job");
-        btnAddJob.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnAddJob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddJobActionPerformed(evt);
             }
         });
@@ -88,6 +83,11 @@ public class AdminHomePage extends javax.swing.JFrame {
         lblName.setText("Welcome to the GB Manufacturing Administrator Access Page.   ");
 
         employeeList.setModel(empList);
+        employeeList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                employeeListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(employeeList);
 
         lblEmpList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -180,6 +180,7 @@ public class AdminHomePage extends javax.swing.JFrame {
              this.setVisible(false);
              this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
              this.dispose();
+             loadEmps(); 
     }//GEN-LAST:event_btnAddEmpActionPerformed
 
 
@@ -240,7 +241,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
 private void loadEmps(){
 try{
-        dataIO data = new dataIO();
+        DataIO data = new DataIO();
          ArrayList<Employee> emps = data.getList();
 
             //clear defaultlistmodel and text area
@@ -248,28 +249,15 @@ try{
             txaEmpDetails.setText("");
 
             //copy each obj from the arraylist over to defauult list model
+            
             for (int i = 0; i < emps.size(); i++) {
-                empList.addElement(emps.get(i) );
+                empList.addElement(emps.get(i));
             
             }
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                     "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-}
-
-private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
-    //get selected items index num
-    int index = employeeList.getSelectedIndex();
-    
-    //if selected show details
-    if(index > -1){
-        Employee emp = empList.getElementAt(index);
-        txaEmpDetails.setText(emp.showEmpDetails());
-    }
-    
-}
-    
 }
 
     private void btnAddJobActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddJobActionPerformed
@@ -289,6 +277,7 @@ private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
         this.setVisible(false);
         this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
         this.dispose();
+       
     }//GEN-LAST:event_btnAddJobActionPerformed
     private void btnTerminateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminateActionPerformed
             try{
@@ -297,7 +286,7 @@ private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
                 
                 //When slected delete and clear txa
                 if(empToTerminate != null){
-                    dataIO data = new dataIO();
+                    DataIO data = new DataIO();
                     data.delete(empToTerminate.getEmployeeID());
                     txaEmpDetails.setText("");
                     loadEmps(); 
@@ -312,3 +301,15 @@ private void lstEmpsValChanges(javax.swing.event.ListSelectionEvent evt){
         // TODO add your handling code here:
         loadEmps();
     }//GEN-LAST:event_btnLoadEmpsActionPerformed
+
+    private void employeeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_employeeListValueChanged
+        // TODO add your handling code here:
+         int index = employeeList.getSelectedIndex();
+    
+    //if selected show details
+         if(index > -1){
+               Employee emp = empList.getElementAt(index);
+               txaEmpDetails.setText(emp.showEmpDetails());
+    }
+    }//GEN-LAST:event_employeeListValueChanged
+}

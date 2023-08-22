@@ -26,7 +26,7 @@ import java.sql.*;
 import javax.swing.DefaultListModel;
 
 
-public class dataIO {
+public class DataIO {
     private final String DATABASE_NAME = "gb-manufacturing";
      private final String USER_NAME = "admin"; 
     private final String PASSWORD = "hamBurger1212";
@@ -56,6 +56,7 @@ public class dataIO {
     }
     
     public ArrayList<Employee>getList() throws SQLException{
+        
          ArrayList<Employee> empArr = new ArrayList<Employee>();
        
         //connect
@@ -153,4 +154,232 @@ public class dataIO {
             pstmt.execute();
     }
     
+    public ArrayList<Job>getJobs() throws SQLException{
+        
+         ArrayList<Job> jobArr = new ArrayList<Job>();
+       
+        //connect
+        Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM job";
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        while(rs.next()){
+            Job job = new Job(); 
+           
+            job.setJob_id(rs.getInt(1));
+            job.setJob_name(rs.getString(2));
+            job.setJob_desc(rs.getString(3));
+            job.setEmp_id(rs.getInt(4));
+            job.setJob_code(rs.getInt(5));
+            job.setReq_mat_id(rs.getInt(6));
+            
+            jobArr.add(job);
+        }
+        con.close();
+        
+        return jobArr;
+    }
+    
+    public void addEmpToJob(String job_name, int empID){
+        
+        try {
+            Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+            PreparedStatement stmt = con.prepareStatement("UPDATE job SET emp_id=? WHERE job_name=?");
+            stmt.setInt(1, empID);
+            stmt.setString(2, job_name);
+           
+            
+            stmt.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(DataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    public ArrayList<Rental> getRentals(int id)
+            throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+
+        // create list model
+        ArrayList<Rental> rentals = new ArrayList<Rental>();
+
+        String strSQL = "SELECT * FROM rental WHERE emp_id=? AND status='open'";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next())
+        {
+            Rental rent = new Rental();
+
+            rent.setRentalID(rs.getInt(1));
+            rent.setEmpID(rs.getInt(2));
+            rent.setStatus(rs.getString(3));
+
+            rentals.add(rent);
+        }
+        con.close();
+
+        return rentals;
+    }
+
+    public ArrayList<Rental> getRentalHistory(int id)
+            throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+
+        String strSQL = "SELECT * FROM rental WHERE emp_id=?;";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+
+        ResultSet r = pstmt.executeQuery();
+
+        ArrayList<Rental> rentals = new ArrayList();
+
+        while (r.next())
+        {
+            Rental rent = new Rental();
+            rent.setRentalID(r.getInt(1));
+            rent.setEmpID(r.getInt(2));
+            rent.setStatus(r.getString(3));
+
+            rentals.add(rent);
+        }
+
+        con.close();
+
+        return rentals;
+    }
+
+    public ArrayList getToolsList(int id)
+            throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+
+        // create list model
+        ArrayList tools = new ArrayList();
+
+        String strSQL = "SELECT tool.tool_name "
+                + "FROM tool JOIN rental_intermediary "
+                + "WHERE rental_id=? && "
+                + "rental_intermediary.tool_id = tool.tool_id;";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next())
+        {
+            String tool = rs.getString(1);
+            tools.add(tool);
+
+        }
+
+        con.close();
+
+        return tools;
+    }
+
+    public void updateRentalStatus(int id)
+            throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+
+        String strSQL2 = "UPDATE tool SET quantity = quantity + 1 "
+                + "WHERE tool_id IN (SELECT tool_id "
+                + "FROM rental_intermediary "
+                + "WHERE rental_id=? )";
+        PreparedStatement pstmt2 = con.prepareStatement(strSQL2);
+        pstmt2.setInt(1, id);
+
+        pstmt2.execute();
+
+        String strSQL = "UPDATE rental SET status=\"closed\" WHERE rental_id=?";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, id);
+
+        pstmt.execute();
+
+        con.close();
+    }
+
+    public void checkOutTools(int empID, Integer[] list, int rentalID)
+            throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+
+        String status = "open";
+
+        String strSQL = "INSERT INTO rental (rental_id, emp_id, status) "
+                + "VALUES (?, ?, ?);";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+        pstmt.setInt(1, rentalID);
+        pstmt.setInt(2, empID);
+        pstmt.setString(3, status);
+
+        pstmt.execute();
+
+        updateTools(con, list);
+        addRental(con, list, rentalID);
+
+        con.close();
+    }
+
+    private void updateTools(Connection con, Integer[] list)
+            throws SQLException
+    {
+
+        String strSQL2;
+
+        for (int i = 0; i < list.length; i++)
+        {
+            strSQL2 = "UPDATE tool SET tool.quantity=tool.quantity - 1 "
+                    + "WHERE tool_id=?;";
+            PreparedStatement pstmt2 = con.prepareStatement(strSQL2);
+            pstmt2.setInt(1, list[i]);
+            pstmt2.execute();
+        }
+    }
+
+    private void addRental(Connection con, Integer[] list, int rentalID)
+            throws SQLException
+    {
+        String strSQL3 = "INSERT INTO rental_intermediary (rental_id, tool_id) "
+                + "VALUES (?, ?)";
+
+        for (int i = 0; i < list.length; i++)
+        {
+
+            PreparedStatement pstmt3 = con.prepareStatement(strSQL3);
+            pstmt3.setInt(1, rentalID);
+            pstmt3.setInt(2, list[i]);
+            pstmt3.execute();
+        }
+    }
 }

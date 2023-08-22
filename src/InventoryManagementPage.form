@@ -94,11 +94,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Check Out Materials"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckOutActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCheckIn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Check In Materials"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckInActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFindEmp">
       <Properties>

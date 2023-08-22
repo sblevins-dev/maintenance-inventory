@@ -1,4 +1,7 @@
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /*
@@ -18,6 +21,7 @@ public class InventoryManagementPage extends javax.swing.JFrame {
      */
     public InventoryManagementPage() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -44,8 +48,18 @@ public class InventoryManagementPage extends javax.swing.JFrame {
         lblIM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnCheckOut.setText("Check Out Materials");
+        btnCheckOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckOutActionPerformed(evt);
+            }
+        });
 
         btnCheckIn.setText("Check In Materials");
+        btnCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckInActionPerformed(evt);
+            }
+        });
 
         btnFindEmp.setText("Find Employee");
 
@@ -93,6 +107,34 @@ public class InventoryManagementPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckOutActionPerformed
+        // TODO add your handling code here:
+           CheckOutForm frame;
+        try
+        {
+            frame = new CheckOutForm();
+            frame.setVisible(true);
+            this.setVisible(false);
+            this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+            this.dispose();
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCheckOutActionPerformed
+
+    private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
+        // TODO add your handling code here:
+         CheckInForm form = new CheckInForm();
+        form.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnCheckInActionPerformed
 
     /**
      * @param args the command line arguments

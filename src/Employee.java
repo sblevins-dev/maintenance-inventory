@@ -92,4 +92,9 @@ public class Employee {
                   output += "Employee Code: " + Integer.toString(empCode) + "\n";
                   return output; 
     }
+    
+    @Override
+    public String toString(){
+        return FName + " " + LName;
+    }
 }
