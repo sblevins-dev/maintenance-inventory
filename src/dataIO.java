@@ -93,7 +93,6 @@ public class dataIO
             emp.setEmpCode(rs.getInt(6));
 
             empArr.add(emp);
-            System.out.println(emp);
         }
         con.close();
 

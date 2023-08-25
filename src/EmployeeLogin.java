@@ -48,6 +48,7 @@ public class EmployeeLogin extends javax.swing.JFrame
         mniEdit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("GB Manufacturing");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
