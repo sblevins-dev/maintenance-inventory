@@ -13,10 +13,11 @@ import java.util.ArrayList;
 public class dataIO
 {
 
-    private final String DATABASE_NAME = "gb-manufacturing";
-    private final String CONNECTION_STRING = "jdbc:mysql://aws-gb-man.ctkxvwo1jmoa.us-east-1.rds.amazonaws.com:3306/" + DATABASE_NAME;
-    private final String USER_NAME = "admin";
-    private final String PASSWORD = "hamBurger1212";
+    private final String DATABASE_NAME = System.getProperty("DATABASE_NAME");
+    private final String CONNECTION_STRING = System.getProperty("CONNECTION_STRING");
+    private final String USER_NAME = System.getProperty("USER_NAME");
+    private final String PASSWORD = System.getProperty("SQL_PASS");
+    
 
     public void add(Employee emp) throws ClassNotFoundException, SQLException
     {
