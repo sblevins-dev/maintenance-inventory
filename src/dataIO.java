@@ -24,9 +24,10 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.*;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 
-public class DataIO {
+public class dataIO {
     private final String DATABASE_NAME = "gb-manufacturing";
      private final String USER_NAME = "admin"; 
     private final String PASSWORD = "hamBurger1212";
@@ -154,30 +155,86 @@ public class DataIO {
             pstmt.execute();
     }
     
-    public ArrayList<Job>getJobs() throws SQLException{
+    public ArrayList<Job>getJobs(int empCode) throws SQLException{
         
          ArrayList<Job> jobArr = new ArrayList<Job>();
-       
+         ResultSet rs = null;
+         String sql = null;
         //connect
         Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
         Statement stmt = con.createStatement();
-        String sql = "SELECT * FROM job";
-        ResultSet rs = stmt.executeQuery(sql);
-        
-        while(rs.next()){
-            Job job = new Job(); 
-           
-            job.setJob_id(rs.getInt(1));
-            job.setJob_name(rs.getString(2));
-            job.setJob_desc(rs.getString(3));
-            job.setEmp_id(rs.getInt(4));
-            job.setJob_code(rs.getInt(5));
-            job.setReq_mat_id(rs.getInt(6));
-            
-            jobArr.add(job);
+        if(empCode == 110){
+                 sql = "SELECT * FROM job WHERE job_code=1000";
+                 rs = stmt.executeQuery(sql);
+                 while(rs.next()){
+                     
+                  Job job = new Job();
+                    
+                    job.setJob_id(rs.getInt(1));
+                    job.setJob_name(rs.getString(2));
+                    job.setJob_desc(rs.getString(3));
+                    job.setEmp_id(rs.getInt(4));
+                    job.setJob_code(rs.getInt(5));
+                    job.setReq_mat_id(rs.getInt(6));
+                    
+                    jobArr.add(job);
+                }
+        }
+        else if(empCode ==120){
+             sql = "SELECT * FROM job WHERE job_code= 2000";
+                 rs = stmt.executeQuery(sql);
+                 while(rs.next()){
+                     
+                  Job job = new Job();
+                    
+                    job.setJob_id(rs.getInt(1));
+                    job.setJob_name(rs.getString(2));
+                    job.setJob_desc(rs.getString(3));
+                    job.setEmp_id(rs.getInt(4));
+                    job.setJob_code(rs.getInt(5));
+                    job.setReq_mat_id(rs.getInt(6));
+                    
+                    jobArr.add(job);
+                }
+         } 
+        else if(empCode == 130){
+                 sql = "SELECT * FROM job WHERE job_code= '3000'";
+                 rs = stmt.executeQuery(sql);
+                 while(rs.next()){
+                     
+                  Job job = new Job();
+                    
+                    job.setJob_id(rs.getInt(1));
+                    job.setJob_name(rs.getString(2));
+                    job.setJob_desc(rs.getString(3));
+                    job.setEmp_id(rs.getInt(4));
+                    job.setJob_code(rs.getInt(5));
+                    job.setReq_mat_id(rs.getInt(6));
+                    
+                    jobArr.add(job);
+                }
+        }
+        else if(empCode == 140){
+             sql = "SELECT * FROM job WHERE job_code=4000";
+                 rs = stmt.executeQuery(sql);
+                 while(rs.next()){
+                     
+                  Job job = new Job();
+                    
+                    job.setJob_id(rs.getInt(1));
+                    job.setJob_name(rs.getString(2));
+                    job.setJob_desc(rs.getString(3));
+                    job.setEmp_id(rs.getInt(4));
+                    job.setJob_code(rs.getInt(5));
+                    job.setReq_mat_id(rs.getInt(6));
+                    
+                    jobArr.add(job);
+                }
+        }
+        else{
+            System.out.println("BROKEN");
         }
         con.close();
-        
         return jobArr;
     }
     
@@ -195,7 +252,7 @@ public class DataIO {
             con.close();
             
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(DataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(dataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
     }
@@ -381,5 +438,27 @@ public class DataIO {
             pstmt3.setInt(2, list[i]);
             pstmt3.execute();
         }
+    }
+    
+    public int getEmpCode(String empID){
+        String query = null;
+        ResultSet rs = null;
+        Statement st = null;
+        int code = 0;
+        try {
+             Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+             query = "SELECT emp_code FROM employee WHERE emp_id="+empID;
+             st = con.createStatement();
+             rs = st.executeQuery(query);
+             while(rs.next()){
+                 code = rs.getInt("emp_code");
+             }
+            
+            
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(dataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        return code;
     }
 }

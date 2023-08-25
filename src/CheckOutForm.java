@@ -25,7 +25,7 @@ public class CheckOutForm extends javax.swing.JFrame
 
     private void populateList() throws ClassNotFoundException, SQLException
     {
-        DataIO data = new DataIO();
+        dataIO data = new dataIO();
 
 //        ArrayList<Tool> tools = new ArrayList();
         ResultSet td = data.getTools();
@@ -165,7 +165,7 @@ public class CheckOutForm extends javax.swing.JFrame
             Random rand = new Random();
             int rentalID = rand.nextInt(10000);
 
-            DataIO data = new DataIO();
+            dataIO data = new dataIO();
             try
             {
                 data.checkOutTools(empID, tools, rentalID);

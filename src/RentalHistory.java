@@ -117,7 +117,7 @@ public class RentalHistory extends javax.swing.JFrame
             String output = "";
             try
             {
-                DataIO data = new DataIO();
+                dataIO data = new dataIO();
                 ArrayList tools = data.getToolsList(rent.getRentalID());
                 
                 txaDetails.setText("");
@@ -204,7 +204,7 @@ public class RentalHistory extends javax.swing.JFrame
     private void pullRentalHistory()
             throws ClassNotFoundException, SQLException
     {
-        DataIO dataResults = new DataIO();
+        dataIO dataResults = new dataIO();
 
         int id = 30001;
         ArrayList<Rental> rentals = dataResults.getRentalHistory(id);

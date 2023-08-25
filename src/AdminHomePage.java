@@ -241,7 +241,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
 private void loadEmps(){
 try{
-        DataIO data = new DataIO();
+        dataIO data = new dataIO();
          ArrayList<Employee> emps = data.getList();
 
             //clear defaultlistmodel and text area
@@ -286,7 +286,7 @@ try{
                 
                 //When slected delete and clear txa
                 if(empToTerminate != null){
-                    DataIO data = new DataIO();
+                    dataIO data = new dataIO();
                     data.delete(empToTerminate.getEmployeeID());
                     txaEmpDetails.setText("");
                     loadEmps(); 

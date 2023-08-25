@@ -27,7 +27,7 @@ login lgn  = new login();
     public EmployeeHomePage(int password) {
         initComponents();
         this.setLocationRelativeTo(null);
-        loadJobs();    
+        loadJobs(password);    
         lgn.setPassword(password);
         
         
@@ -36,7 +36,7 @@ login lgn  = new login();
     public EmployeeHomePage() {
         initComponents();
         this.setLocationRelativeTo(null);
-        loadJobs();
+      //  loadJobs(int password);
         lgn.getPassword();
     }
 
@@ -160,7 +160,7 @@ login lgn  = new login();
        int  empID = lgn.getPassword();
         Job selectedJob = lstJobs.getSelectedValue();
         if(selectedJob != null){
-                    DataIO data = new DataIO();
+                    dataIO data = new dataIO();
                     data.addEmpToJob(selectedJob.getJob_name(), empID);
                     JOptionPane.showMessageDialog(this, "You have selected " + selectedJob.getJob_name() + ".", "Added " + empID + " to job.", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -224,11 +224,14 @@ login lgn  = new login();
     // End of variables declaration//GEN-END:variables
 
     
-    public void loadJobs(){
+    public void loadJobs(int password){
         try{
-        DataIO data = new DataIO();
-         ArrayList<Job> jobs = data.getJobs();
-
+        int code = 0;
+        dataIO data = new dataIO();
+        String id = String.valueOf(password);
+         code = data.getEmpCode(id);
+         ArrayList<Job> jobs = data.getJobs(code);
+         
             //clear defaultlistmodel and text area
             jobList.clear();
             txaJobDetails.setText("");

@@ -202,7 +202,7 @@ public class addJob extends javax.swing.JFrame
 
             String jobCode = lstJobCodes.getSelectedValue();
 
-            DataIO data = new DataIO();
+            dataIO data = new dataIO();
 
             Random rand = new Random();
 
@@ -305,7 +305,7 @@ public class addJob extends javax.swing.JFrame
 
     private void populateTable() throws ClassNotFoundException, SQLException
     {
-        DataIO dataResults = new DataIO();
+        dataIO dataResults = new dataIO();
         ResultSet results = dataResults.getTools();
         ResultSetMetaData metaData = results.getMetaData();
         int columnCount = metaData.getColumnCount();

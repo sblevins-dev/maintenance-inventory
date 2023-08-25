@@ -165,7 +165,7 @@ public class CheckInForm extends javax.swing.JFrame
             String output = "";
             try
             {
-                DataIO data = new DataIO();
+                dataIO data = new dataIO();
                 ArrayList tools = data.getToolsList(rent.getRentalID());
                 
                 txaDetails.setText("");
@@ -198,7 +198,7 @@ public class CheckInForm extends javax.swing.JFrame
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckInActionPerformed
     {//GEN-HEADEREND:event_btnCheckInActionPerformed
-        DataIO data = new DataIO();
+        dataIO data = new dataIO();
         int index = lstID.getSelectedIndex();
         Rental rent = rentalIDs.getElementAt(index);
         
@@ -281,7 +281,7 @@ public class CheckInForm extends javax.swing.JFrame
     {
         try
         {
-            DataIO data = new DataIO();
+            dataIO data = new dataIO();
             ArrayList<Rental> rent = data.getRentals(id);
 
             //clear defaultlistmodel and text area

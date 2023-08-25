@@ -184,7 +184,7 @@ public class addEmployee extends javax.swing.JFrame {
         }
         Employee emp = createEmployee();
        try{
-           DataIO data = new DataIO();
+           dataIO data = new dataIO();
            data.add(emp);
            JOptionPane.showMessageDialog(this, "Employee added to system", "Successful" ,JOptionPane.INFORMATION_MESSAGE);
            clear();
