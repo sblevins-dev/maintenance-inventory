@@ -125,10 +125,10 @@ public class RentalHistory extends javax.swing.JFrame
                 }
             } catch (ClassNotFoundException ex)
             {
-                Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RentalHistory.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex)
             {
-                Logger.getLogger(CheckInForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RentalHistory.class.getName()).log(Level.SEVERE, null, ex);
             }
             //lstDetails.setText(rent.showRentalDetails(rent));
             txaDetails.setText(output);

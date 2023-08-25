@@ -1,8 +1,13 @@
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,15 +20,20 @@ import javax.swing.DefaultListModel;
 public class InventoryManagementPage extends javax.swing.JFrame
 {
 
-    DefaultListModel<Tool> lstTool = new DefaultListModel();
+    DefaultListModel<Tool> toolList = new DefaultListModel();
+    DefaultListModel<Rental> homeRentalIDs = new DefaultListModel();
+    DefaultListModel<Rental> rentalIDs = new DefaultListModel();
+    ArrayList<Tool> tools = new ArrayList();
 
     /**
      * Creates new form InventoryManagementPage
      */
-    public InventoryManagementPage()
+    public InventoryManagementPage() throws ClassNotFoundException, SQLException
     {
         initComponents();
         this.setLocationRelativeTo(null);
+        populateToolList();
+        populateHomeRentalList();
     }
 
     /**
@@ -37,9 +47,28 @@ public class InventoryManagementPage extends javax.swing.JFrame
     {
 
         lblIM = new javax.swing.JLabel();
-        btnCheckOut = new javax.swing.JButton();
+        invPane = new javax.swing.JTabbedPane();
+        pnlHome = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lstHomeRentals = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txaHomeRentalDetails = new javax.swing.JTextArea();
+        pnlCheckIn = new javax.swing.JPanel();
+        lblId = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        btnRetrieve = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstRentals = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txaRentalDetails = new javax.swing.JTextArea();
         btnCheckIn = new javax.swing.JButton();
-        btnFindEmp = new javax.swing.JButton();
+        pnlCheckOut = new javax.swing.JPanel();
+        lblId2 = new javax.swing.JLabel();
+        txtIdCheckOut = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstTools = new javax.swing.JList<>();
+        btnCheckOut = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniLogout = new javax.swing.JMenuItem();
@@ -51,15 +80,73 @@ public class InventoryManagementPage extends javax.swing.JFrame
         lblIM.setText("Inventory Management Portal");
         lblIM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        btnCheckOut.setText("Check Out Materials");
-        btnCheckOut.addActionListener(new java.awt.event.ActionListener()
+        lstHomeRentals.setModel(homeRentalIDs);
+        lstHomeRentals.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                lstHomeRentalsValueChanged(evt);
+            }
+        });
+        jScrollPane4.setViewportView(lstHomeRentals);
+
+        txaHomeRentalDetails.setColumns(20);
+        txaHomeRentalDetails.setRows(5);
+        jScrollPane5.setViewportView(txaHomeRentalDetails);
+
+        javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
+        pnlHome.setLayout(pnlHomeLayout);
+        pnlHomeLayout.setHorizontalGroup(
+            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHomeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlHomeLayout.setVerticalGroup(
+            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHomeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        invPane.addTab("Home", pnlHome);
+
+        lblId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblId.setText("Employee ID:");
+
+        txtId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        btnRetrieve.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRetrieve.setText("Retrieve");
+        btnRetrieve.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnCheckOutActionPerformed(evt);
+                btnRetrieveActionPerformed(evt);
             }
         });
 
+        lstRentals.setModel(rentalIDs);
+        lstRentals.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                lstRentalsValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(lstRentals);
+
+        txaRentalDetails.setColumns(20);
+        txaRentalDetails.setRows(5);
+        jScrollPane2.setViewportView(txaRentalDetails);
+
+        btnCheckIn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCheckIn.setText("Check In Materials");
         btnCheckIn.addActionListener(new java.awt.event.ActionListener()
         {
@@ -69,7 +156,105 @@ public class InventoryManagementPage extends javax.swing.JFrame
             }
         });
 
-        btnFindEmp.setText("Find Employee");
+        javax.swing.GroupLayout pnlCheckInLayout = new javax.swing.GroupLayout(pnlCheckIn);
+        pnlCheckIn.setLayout(pnlCheckInLayout);
+        pnlCheckInLayout.setHorizontalGroup(
+            pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCheckInLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCheckInLayout.createSequentialGroup()
+                        .addComponent(btnCheckIn)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlCheckInLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(pnlCheckInLayout.createSequentialGroup()
+                                .addComponent(lblId)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(btnRetrieve)
+                                .addGap(0, 151, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        pnlCheckInLayout.setVerticalGroup(
+            pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCheckInLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblId)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRetrieve))
+                .addGap(23, 23, 23)
+                .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        invPane.addTab("Check In", pnlCheckIn);
+
+        lblId2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblId2.setText("Employee Id:");
+
+        txtIdCheckOut.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Tools:");
+
+        lstTools.setModel(toolList);
+        jScrollPane3.setViewportView(lstTools);
+
+        btnCheckOut.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCheckOut.setText("Check Out");
+        btnCheckOut.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCheckOutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlCheckOutLayout = new javax.swing.GroupLayout(pnlCheckOut);
+        pnlCheckOut.setLayout(pnlCheckOutLayout);
+        pnlCheckOutLayout.setHorizontalGroup(
+            pnlCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCheckOutLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCheckOutLayout.createSequentialGroup()
+                        .addComponent(lblId2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtIdCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1))
+                    .addComponent(btnCheckOut))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlCheckOutLayout.setVerticalGroup(
+            pnlCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCheckOutLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnlCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCheckOutLayout.createSequentialGroup()
+                        .addGroup(pnlCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblId2)
+                            .addComponent(txtIdCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCheckOut))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        invPane.addTab("Check Out", pnlCheckOut);
 
         jMenu1.setText("File");
 
@@ -88,66 +273,224 @@ public class InventoryManagementPage extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(lblIM, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 30, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnFindEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCheckIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap())
+                .addGap(31, 31, 31)
+                .addComponent(lblIM, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(invPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblIM, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFindEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(invPane)
                 .addContainerGap())
         );
+
+        invPane.getAccessibleContext().setAccessibleName("Home");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckInActionPerformed
     {//GEN-HEADEREND:event_btnCheckInActionPerformed
-        CheckInForm form = new CheckInForm();
-        form.setVisible(true);
-        this.setVisible(false);
-        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
-        this.dispose();
-    }//GEN-LAST:event_btnCheckInActionPerformed
+        int index = lstRentals.getSelectedIndex();
+        Rental rent = rentalIDs.getElementAt(index);
+        JFrame frame = new JFrame();
 
-    private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckOutActionPerformed
-    {//GEN-HEADEREND:event_btnCheckOutActionPerformed
-        CheckOutForm frame;
+        if (txtId.getText().isEmpty())
+        {
+
+            JOptionPane.showMessageDialog(frame, "Please enter in an Employee's ID", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (rent.getStatus().equals("closed"))
+        {
+            JOptionPane.showMessageDialog(frame, "This rental has already been checked in!", "Status Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        dataIO data = new dataIO();
+
         try
         {
-            frame = new CheckOutForm();
-            frame.setVisible(true);
-            this.setVisible(false);
-            this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
-            this.dispose();
+            data.updateRentalStatus(rent.getRentalID());
+            JOptionPane.showMessageDialog(frame, "Successfully checked-in rental!");
+            txaRentalDetails.setText("Status: Closed");
         } catch (ClassNotFoundException ex)
         {
             Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frame, "Class Error: ", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex)
         {
             Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frame, "Database Error: ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCheckInActionPerformed
+
+    private void btnRetrieveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRetrieveActionPerformed
+    {//GEN-HEADEREND:event_btnRetrieveActionPerformed
+
+        JFrame frame = new JFrame();
+
+        if (txtId.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(frame, "Please enter in an Employee's Id", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        txaRentalDetails.setText("");
+        try
+        {
+            int id = Integer.parseInt(txtId.getText());
+            displayRentals(id);
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRetrieveActionPerformed
+
+    private void lstRentalsValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_lstRentalsValueChanged
+    {//GEN-HEADEREND:event_lstRentalsValueChanged
+        //get selected items index num
+        int index = lstRentals.getSelectedIndex();
+
+        //if selected show details
+        if (index > -1)
+        {
+            Rental rent = rentalIDs.getElementAt(index);
+            String output = "Status:\n";
+            output += "    " + rent.getStatus() + "\n";
+            try
+            {
+                dataIO data = new dataIO();
+                ArrayList tools = data.getToolsList(rent.getRentalID());
+
+                txaRentalDetails.setText("");
+
+                output += "Tools:\n";
+
+                for (int i = 0; i < tools.size(); i++)
+                {
+                    output += "    ";
+                    output += tools.get(i);
+                    output += "\n";
+                }
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //lstDetails.setText(rent.showRentalDetails(rent));
+            txaRentalDetails.setText(output);
+        }
+    }//GEN-LAST:event_lstRentalsValueChanged
+
+    private void btnCheckOutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCheckOutActionPerformed
+    {//GEN-HEADEREND:event_btnCheckOutActionPerformed
+        JFrame frame = new JFrame();
+        if (validateInputs())
+        {
+            int empID = Integer.parseInt(txtIdCheckOut.getText());
+            Integer[] tools = getSelectedRows();
+            Random rand = new Random();
+            int rentalID = rand.nextInt(10000);
+
+            dataIO data = new dataIO();
+            try
+            {
+                data.checkOutTools(empID, tools, rentalID);
+
+                JOptionPane.showMessageDialog(frame,
+                        "Successfully checked out rental!");
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(
+                        InventoryManagementPage.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(frame, ex,
+                        "Class Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(InventoryManagementPage.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(frame, ex,
+                        "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else
+        {
+            JOptionPane.showMessageDialog(frame,
+                    "Please select correct information",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnCheckOutActionPerformed
+
+    private void lstHomeRentalsValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_lstHomeRentalsValueChanged
+    {//GEN-HEADEREND:event_lstHomeRentalsValueChanged
+        //get selected items index num
+        int index = lstHomeRentals.getSelectedIndex();
+        txaHomeRentalDetails.setText("");
+
+        //if selected show details
+        if (index > -1)
+        {
+            Rental rent = homeRentalIDs.getElementAt(index);
+            String output = "Employee ID:\n" + "    " + rent.getEmpID() + "\n" + "Status:\n";
+            output += "    " + rent.getStatus() + "\n";
+            try
+            {
+                dataIO data = new dataIO();
+                ArrayList tools = data.getToolsList(rent.getRentalID());
+
+                
+
+                output += "Tools:\n";
+
+                for (int i = 0; i < tools.size(); i++)
+                {
+                    output += "    ";
+                    output += tools.get(i);
+                    output += "\n";
+                }
+            } catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex)
+            {
+                Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //lstDetails.setText(rent.showRentalDetails(rent));
+            txaHomeRentalDetails.setText(output);
+        }
+    }//GEN-LAST:event_lstHomeRentalsValueChanged
+
+    public void populateToolList() throws ClassNotFoundException, SQLException
+    {
+
+        dataIO data = new dataIO();
+
+        ResultSet td = data.getTools();
+
+        while (td.next())
+        {
+            Tool tool = new Tool();
+
+            tool.setToolID(td.getInt(1));
+            tool.setToolName(td.getString(2));
+            tool.setToolLocation(td.getString(3));
+            tool.setToolQuantity(td.getInt(4));
+
+            tools.add(tool);
+        }
+
+        for (int i = 0; i < tools.size(); i++)
+        {
+            toolList.addElement(tools.get(i));
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -189,19 +532,116 @@ public class InventoryManagementPage extends javax.swing.JFrame
         {
             public void run()
             {
-                new InventoryManagementPage().setVisible(true);
+                try
+                {
+                    new InventoryManagementPage().setVisible(true);
+                } catch (ClassNotFoundException ex)
+                {
+                    Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex)
+                {
+                    Logger.getLogger(InventoryManagementPage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
+
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckIn;
     private javax.swing.JButton btnCheckOut;
-    private javax.swing.JButton btnFindEmp;
+    private javax.swing.JButton btnRetrieve;
+    private javax.swing.JTabbedPane invPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblIM;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblId2;
+    private javax.swing.JList<Rental> lstHomeRentals;
+    private javax.swing.JList<Rental> lstRentals;
+    private javax.swing.JList<Tool> lstTools;
     private javax.swing.JMenuItem mniLogout;
+    private javax.swing.JPanel pnlCheckIn;
+    private javax.swing.JPanel pnlCheckOut;
+    private javax.swing.JPanel pnlHome;
+    private javax.swing.JTextArea txaHomeRentalDetails;
+    private javax.swing.JTextArea txaRentalDetails;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtIdCheckOut;
     // End of variables declaration//GEN-END:variables
+
+    private void displayRentals(int id) throws ClassNotFoundException
+    {
+        try
+        {
+            dataIO data = new dataIO();
+            ArrayList<Rental> rent = data.getRentals(id);
+
+            //clear defaultlistmodel and text area
+            rentalIDs.clear();
+            //txaEmpDetails.setText("");
+
+            //copy each obj from the arraylist over to defauult list model
+            for (int i = 0; i < rent.size(); i++)
+            {
+                rentalIDs.addElement(rent.get(i));
+
+            }
+        } catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private Integer[] getSelectedRows()
+    {
+        int[] indices = lstTools.getSelectedIndices();
+        int rowCount = indices.length;
+        Integer[] toolIDs = new Integer[rowCount];
+
+        for (int i = 0; i < indices.length; i++)
+        {
+            Tool tool = tools.get(indices[i]);
+            toolIDs[i] = tool.getToolID();
+        }
+
+        return toolIDs;
+    }
+
+    private boolean validateInputs()
+    {
+        if (txtIdCheckOut.getText().isEmpty()
+                || lstTools.getSelectedIndices().length == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void populateHomeRentalList() throws ClassNotFoundException, SQLException
+    {
+        dataIO data = new dataIO();
+
+        ArrayList<Rental> rent = data.getAllRentals();
+
+        homeRentalIDs.clear();
+        //txaEmpDetails.setText("");
+
+        //copy each obj from the arraylist over to defauult list model
+        for (int i = 0; i < rent.size(); i++)
+        {
+            homeRentalIDs.addElement(rent.get(i));
+
+        }
+    }
 }
