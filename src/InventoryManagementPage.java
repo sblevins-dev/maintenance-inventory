@@ -46,7 +46,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
     private void initComponents()
     {
 
-        lblIM = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         invPane = new javax.swing.JTabbedPane();
         pnlHome = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -69,6 +69,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
         jScrollPane3 = new javax.swing.JScrollPane();
         lstTools = new javax.swing.JList<>();
         btnCheckOut = new javax.swing.JButton();
+        lblIM = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniLogout = new javax.swing.JMenuItem();
@@ -76,10 +77,13 @@ public class InventoryManagementPage extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblIM.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        lblIM.setText("Inventory Management Portal");
-        lblIM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        pnlHome.setBackground(new java.awt.Color(255, 255, 255));
+
+        lstHomeRentals.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lstHomeRentals.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lstHomeRentals.setModel(homeRentalIDs);
         lstHomeRentals.addListSelectionListener(new javax.swing.event.ListSelectionListener()
         {
@@ -91,7 +95,9 @@ public class InventoryManagementPage extends javax.swing.JFrame
         jScrollPane4.setViewportView(lstHomeRentals);
 
         txaHomeRentalDetails.setColumns(20);
+        txaHomeRentalDetails.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txaHomeRentalDetails.setRows(5);
+        txaHomeRentalDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane5.setViewportView(txaHomeRentalDetails);
 
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
@@ -100,9 +106,9 @@ public class InventoryManagementPage extends javax.swing.JFrame
             pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlHomeLayout.setVerticalGroup(
@@ -111,11 +117,13 @@ public class InventoryManagementPage extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         invPane.addTab("Home", pnlHome);
+
+        pnlCheckIn.setBackground(new java.awt.Color(255, 255, 255));
 
         lblId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblId.setText("Employee ID:");
@@ -132,6 +140,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
             }
         });
 
+        lstRentals.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lstRentals.setModel(rentalIDs);
         lstRentals.addListSelectionListener(new javax.swing.event.ListSelectionListener()
         {
@@ -144,6 +153,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
 
         txaRentalDetails.setColumns(20);
         txaRentalDetails.setRows(5);
+        txaRentalDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane2.setViewportView(txaRentalDetails);
 
         btnCheckIn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -177,7 +187,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)
                                 .addComponent(btnRetrieve)
-                                .addGap(0, 151, Short.MAX_VALUE)))))
+                                .addGap(0, 152, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         pnlCheckInLayout.setVerticalGroup(
@@ -192,12 +202,14 @@ public class InventoryManagementPage extends javax.swing.JFrame
                 .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         invPane.addTab("Check In", pnlCheckIn);
+
+        pnlCheckOut.setBackground(new java.awt.Color(255, 255, 255));
 
         lblId2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblId2.setText("Employee Id:");
@@ -207,6 +219,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Tools:");
 
+        lstTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lstTools.setModel(toolList);
         jScrollPane3.setViewportView(lstTools);
 
@@ -235,7 +248,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
                         .addComponent(jLabel1))
                     .addComponent(btnCheckOut))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlCheckOutLayout.setVerticalGroup(
@@ -250,11 +263,19 @@ public class InventoryManagementPage extends javax.swing.JFrame
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCheckOut))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         invPane.addTab("Check Out", pnlCheckOut);
+
+        jPanel1.add(invPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 590, 370));
+        invPane.getAccessibleContext().setAccessibleName("Home");
+
+        lblIM.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblIM.setText("Inventory Management Portal");
+        lblIM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lblIM, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
         jMenu1.setText("File");
 
@@ -272,23 +293,12 @@ public class InventoryManagementPage extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(lblIM, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(invPane)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblIM, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(invPane)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
         );
-
-        invPane.getAccessibleContext().setAccessibleName("Home");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -557,6 +567,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
