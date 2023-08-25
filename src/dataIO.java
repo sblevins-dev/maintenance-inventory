@@ -224,6 +224,37 @@ public class dataIO
         }
 
     }
+    
+    public ArrayList<Rental> getAllRentals() throws ClassNotFoundException, SQLException
+    {
+        //check for the driver
+        Class.forName("software.aws.rds.jdbc.mysql.Driver");
+        //connect to DB
+        Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                USER_NAME, PASSWORD);
+
+        // create list model
+        ArrayList<Rental> rentals = new ArrayList<Rental>();
+
+        String strSQL = "SELECT * FROM rental";
+        PreparedStatement pstmt = con.prepareStatement(strSQL);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next())
+        {
+            Rental rent = new Rental();
+
+            rent.setRentalID(rs.getInt(1));
+            rent.setEmpID(rs.getInt(2));
+            rent.setStatus(rs.getString(3));
+
+            rentals.add(rent);
+        }
+        con.close();
+
+        return rentals;
+    }
 
     public ArrayList<Rental> getRentals(int id)
             throws ClassNotFoundException, SQLException
@@ -237,7 +268,7 @@ public class dataIO
         // create list model
         ArrayList<Rental> rentals = new ArrayList<Rental>();
 
-        String strSQL = "SELECT * FROM rental WHERE emp_id=? AND status='open'";
+        String strSQL = "SELECT * FROM rental WHERE emp_id=?";
         PreparedStatement pstmt = con.prepareStatement(strSQL);
         pstmt.setInt(1, id);
 
