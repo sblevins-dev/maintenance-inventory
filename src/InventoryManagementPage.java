@@ -141,6 +141,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
         });
 
         lstRentals.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lstRentals.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lstRentals.setModel(rentalIDs);
         lstRentals.addListSelectionListener(new javax.swing.event.ListSelectionListener()
         {
@@ -152,6 +153,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
         jScrollPane1.setViewportView(lstRentals);
 
         txaRentalDetails.setColumns(20);
+        txaRentalDetails.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txaRentalDetails.setRows(5);
         txaRentalDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane2.setViewportView(txaRentalDetails);
@@ -199,10 +201,10 @@ public class InventoryManagementPage extends javax.swing.JFrame
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRetrieve))
                 .addGap(23, 23, 23)
-                .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlCheckInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -220,6 +222,7 @@ public class InventoryManagementPage extends javax.swing.JFrame
         jLabel1.setText("Tools:");
 
         lstTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lstTools.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lstTools.setModel(toolList);
         jScrollPane3.setViewportView(lstTools);
 
