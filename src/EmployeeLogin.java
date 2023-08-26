@@ -42,10 +42,6 @@ public class EmployeeLogin extends javax.swing.JFrame
         lblUsername = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        mniLogout = new javax.swing.JMenuItem();
-        mniEdit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GB Manufacturing");
@@ -96,7 +92,7 @@ public class EmployeeLogin extends javax.swing.JFrame
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -110,18 +106,6 @@ public class EmployeeLogin extends javax.swing.JFrame
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
         );
-
-        jMenu1.setText("File");
-
-        mniLogout.setText("Logout");
-        jMenu1.add(mniLogout);
-
-        jMenuBar1.add(jMenu1);
-
-        mniEdit.setText("Edit");
-        jMenuBar1.add(mniEdit);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,13 +192,9 @@ public class EmployeeLogin extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
-    private javax.swing.JMenu mniEdit;
-    private javax.swing.JMenuItem mniLogout;
     private javax.swing.JPasswordField pfLogin;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

@@ -48,7 +48,7 @@ public class RentalHistory extends javax.swing.JFrame
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        mniExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GB Manufacturing");
@@ -122,12 +122,26 @@ public class RentalHistory extends javax.swing.JFrame
         jMenu1.setText("File");
 
         jMenuItem1.setText("Logout");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu1);
+        mniExit.setText("Exit");
+        mniExit.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mniExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mniExit);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -192,6 +206,20 @@ public class RentalHistory extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
+        EmployeeLogin frame = new EmployeeLogin();
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void mniExitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mniExitActionPerformed
+    {//GEN-HEADEREND:event_mniExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mniExitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -242,13 +270,13 @@ public class RentalHistory extends javax.swing.JFrame
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<Rental> lstRentals;
+    private javax.swing.JMenuItem mniExit;
     private javax.swing.JTextArea txaDetails;
     // End of variables declaration//GEN-END:variables
 
