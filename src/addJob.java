@@ -60,7 +60,7 @@ public class addJob extends javax.swing.JFrame
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniLogout = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        mniExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GB Manufacturing");
@@ -197,12 +197,26 @@ public class addJob extends javax.swing.JFrame
         jMenu1.setText("File");
 
         mniLogout.setText("Logout");
+        mniLogout.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mniLogoutActionPerformed(evt);
+            }
+        });
         jMenu1.add(mniLogout);
 
-        jMenuBar1.add(jMenu1);
+        mniExit.setText("Exit");
+        mniExit.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mniExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mniExit);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -276,6 +290,20 @@ public class addJob extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnAddJob1ActionPerformed
 
+    private void mniLogoutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mniLogoutActionPerformed
+    {//GEN-HEADEREND:event_mniLogoutActionPerformed
+        EmployeeLogin frame = new EmployeeLogin();
+        frame.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_mniLogoutActionPerformed
+
+    private void mniExitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mniExitActionPerformed
+    {//GEN-HEADEREND:event_mniExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mniExitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -326,7 +354,6 @@ public class addJob extends javax.swing.JFrame
     private javax.swing.JButton btnBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -335,6 +362,7 @@ public class addJob extends javax.swing.JFrame
     private javax.swing.JLabel lblJobName;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JList<String> lstJobCodes;
+    private javax.swing.JMenuItem mniExit;
     private javax.swing.JMenuItem mniLogout;
     private javax.swing.JTable tblToolList;
     private javax.swing.JTextField txtJobDescription;
