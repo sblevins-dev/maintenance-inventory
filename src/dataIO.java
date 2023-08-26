@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class dataIO
 {
 
-    private final String DATABASE_NAME = "gb-manufacturing";
-    private final String CONNECTION_STRING = "jdbc:mysql://aws-gb-man.ctkxvwo1jmoa.us-east-1.rds.amazonaws.com:3306/" + DATABASE_NAME;
-    private final String USER_NAME = "admin";
-    private final String PASSWORD = "hamBurger1212";
+    private final String DATABASE_NAME = System.getProperty("DATABASE_NAME");
+    private final String CONNECTION_STRING = System.getProperty("CONNECTION_STRING");
+    private final String USER_NAME = System.getProperty("USER_NAME");
+    private final String PASSWORD = System.getProperty("SQL_PASS");
 
     public void add(Employee emp) throws ClassNotFoundException, SQLException
     {
@@ -174,7 +174,7 @@ public class dataIO
         pstmt.execute();
     }
 
-    public ArrayList<Job> getJobs() throws SQLException
+    public ArrayList<Job> getJobs(int empCode) throws SQLException
     {
 
         ArrayList<Job> jobArr = new ArrayList<Job>();
@@ -182,25 +182,114 @@ public class dataIO
         //connect
         Connection con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
         Statement stmt = con.createStatement();
-        String sql = "SELECT * FROM job";
-        ResultSet rs = stmt.executeQuery(sql);
+        String sql = null;
+        ResultSet rs = null;
 
-        while (rs.next())
+        if (empCode == 110)
         {
-            Job job = new Job();
+            sql = "SELECT * FROM job WHERE job_code=1000";
+            rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
 
-            job.setJob_id(rs.getInt(1));
-            job.setJob_name(rs.getString(2));
-            job.setJob_desc(rs.getString(3));
-            job.setEmp_id(rs.getInt(4));
-            job.setJob_code(rs.getInt(5));
-            job.setReq_mat_id(rs.getInt(6));
+                Job job = new Job();
 
-            jobArr.add(job);
+                job.setJob_id(rs.getInt(1));
+                job.setJob_name(rs.getString(2));
+                job.setJob_desc(rs.getString(3));
+                job.setEmp_id(rs.getInt(4));
+                job.setJob_code(rs.getInt(5));
+                job.setReq_mat_id(rs.getInt(6));
+
+                jobArr.add(job);
+            }
+        } else if (empCode == 120)
+        {
+            sql = "SELECT * FROM job WHERE job_code= 2000";
+            rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+
+                Job job = new Job();
+
+                job.setJob_id(rs.getInt(1));
+                job.setJob_name(rs.getString(2));
+                job.setJob_desc(rs.getString(3));
+                job.setEmp_id(rs.getInt(4));
+                job.setJob_code(rs.getInt(5));
+                job.setReq_mat_id(rs.getInt(6));
+
+                jobArr.add(job);
+            }
+        } else if (empCode == 130)
+        {
+            sql = "SELECT * FROM job WHERE job_code= '3000'";
+            rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+
+                Job job = new Job();
+
+                job.setJob_id(rs.getInt(1));
+                job.setJob_name(rs.getString(2));
+                job.setJob_desc(rs.getString(3));
+                job.setEmp_id(rs.getInt(4));
+                job.setJob_code(rs.getInt(5));
+                job.setReq_mat_id(rs.getInt(6));
+
+                jobArr.add(job);
+            }
+        } else if (empCode == 140)
+        {
+            sql = "SELECT * FROM job WHERE job_code=4000";
+            rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+
+                Job job = new Job();
+
+                job.setJob_id(rs.getInt(1));
+                job.setJob_name(rs.getString(2));
+                job.setJob_desc(rs.getString(3));
+                job.setEmp_id(rs.getInt(4));
+                job.setJob_code(rs.getInt(5));
+                job.setReq_mat_id(rs.getInt(6));
+
+                jobArr.add(job);
+            }
+        } else
+        {
+            System.out.println("BROKEN");
         }
+
         con.close();
 
         return jobArr;
+    }
+
+    public int getEmpCode(String empID)
+    {
+        String query = null;
+        ResultSet rs = null;
+        Statement st = null;
+        int code = 0;
+        try
+        {
+            Connection con = DriverManager.getConnection(CONNECTION_STRING,
+                    USER_NAME, PASSWORD);
+            query = "SELECT emp_code FROM employee WHERE emp_id=" + empID;
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next())
+            {
+                code = rs.getInt("emp_code");
+            }
+
+        } catch (SQLException ex)
+        {
+            java.util.logging.Logger.getLogger(dataIO.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        return code;
     }
 
     public void addEmpToJob(String job_name, int empID)
@@ -223,7 +312,7 @@ public class dataIO
         }
 
     }
-    
+
     public ArrayList<Rental> getAllRentals() throws ClassNotFoundException, SQLException
     {
         //check for the driver
