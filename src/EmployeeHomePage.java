@@ -313,7 +313,6 @@ public class EmployeeHomePage extends javax.swing.JFrame
             dataIO data = new dataIO();
             int code = 0;
             String id = String.valueOf(password);
-            System.out.println(id);
             code = data.getEmpCode(id);
             ArrayList<Job> jobs = data.getJobs(code);
 

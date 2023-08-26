@@ -184,7 +184,6 @@ public class dataIO
         Statement stmt = con.createStatement();
         String sql = null;
         ResultSet rs = null;
-        System.out.println(empCode);
 
         if (empCode == 110)
         {
@@ -203,7 +202,6 @@ public class dataIO
                 job.setReq_mat_id(rs.getInt(6));
 
                 jobArr.add(job);
-                System.out.println(job);
             }
         } else if (empCode == 120)
         {
