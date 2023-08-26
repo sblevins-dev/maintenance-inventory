@@ -26,7 +26,14 @@ public class EmployeeHomePage extends javax.swing.JFrame
     {
         initComponents();
         this.setLocationRelativeTo(null);
-        loadJobs();
+        lblName.setText(CurrentEmployee.getFullName());
+    }
+    
+    public EmployeeHomePage(int password)
+    {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        loadJobs(password);
         lblName.setText(CurrentEmployee.getFullName());
     }
 
@@ -299,12 +306,16 @@ public class EmployeeHomePage extends javax.swing.JFrame
     private javax.swing.JTextArea txaJobDetails;
     // End of variables declaration//GEN-END:variables
 
-    public void loadJobs()
+    public void loadJobs(int password)
     {
         try
         {
             dataIO data = new dataIO();
-            ArrayList<Job> jobs = data.getJobs();
+            int code = 0;
+            String id = String.valueOf(password);
+            System.out.println(id);
+            code = data.getEmpCode(id);
+            ArrayList<Job> jobs = data.getJobs(code);
 
             //clear defaultlistmodel and text area
             jobList.clear();
